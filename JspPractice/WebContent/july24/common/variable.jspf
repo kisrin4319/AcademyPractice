@@ -1,0 +1,4 @@
+<%@ page contentType = "text/html; charset=EUC-KR" %>
+<%
+	java.util.Date CURRENT_TIME = new java.util.Date();
+%>
