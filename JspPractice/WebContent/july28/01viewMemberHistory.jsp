@@ -5,8 +5,7 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 
 
 <%
@@ -20,7 +19,7 @@
 <body>
 
 <%
-	Class.forName("oracle.jdbc.driver.OracleDriver");
+	/* Class.forName("oracle.jdbc.driver.OracleDriver"); */
 
 	Connection conn = null;
 	Statement stmt = null;

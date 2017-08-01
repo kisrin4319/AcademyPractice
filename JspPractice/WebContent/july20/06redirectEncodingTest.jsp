@@ -3,5 +3,5 @@
 <%
 	String value = "ÀÚ¹Ù";
 	String encodedValue = URLEncoder.encode(value, "UTF-8");
-	response.sendRedirect("./login.jsp?memberId=" + encodedValue);
+	response.sendRedirect("./05login.jsp?memberId=" + encodedValue);
 %>

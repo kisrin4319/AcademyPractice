@@ -54,8 +54,8 @@
 	</jsp-config>
 	
 	<servlet>
-		<servlet-name>JDBCDriverLoader</servlet-name>
-		<servlet-class>loader.Loader</servlet-class>
+		<servlet-name>DBCPInit</servlet-name>
+		<servlet-class>loader.DBCPInit</servlet-class>
 		<init-param>
 			<param-name>jdbcdriver</param-name>
 			<param-value>oracle.jdbc.driver.OracleDriver</param-value>
