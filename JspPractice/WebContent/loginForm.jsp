@@ -1,61 +1,84 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ include file = "../view/color.jsp"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <html>
-<head><title>ë¡œê·¸ì¸</title></head>
-<link href="style.css" rel = "stylesheet" type = "text/css">
-
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<title>·Î±×ÀÎ</title>
+<link href="css/style.css" rel = "stylesheet" type = "text/css" />
+</head>
+<body onload="begin()">
+<!--  before login -->
+<%
+	if(session.getAttribute("memId")==null){
+%>
 	<script type="text/javascript">
 	
 	function begin() {
-		documetn.myform.id.focus();
+		document.myform.id.focus();
 	}
 	function checkIt() {
 		if(!document.myform.id.value){
-			alert("ì´ë¦„ì„ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.");
+			alert("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä!");
 			document.myform.id.focus();
 			return false;
 		}
 		if(!document.myform.passwd.value){
-			alert("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.");
+			alert("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä!");
 			document.myform.passwd.focus();
 			return false;
 		}
 	}	
 	</script>
-<body onload="begin()" bgcolor="<%=bodyback_c%>">
-<form name="myform" action="loginPro.jsp" method="post" onsubmit="return checkIt()">
-<table cellspacing ="1" cellpadding="1" width ="260" border="1" align="center">
-	<tr height="30">
-		<td colspan="2" align="middle" bgcolor="<%=title_c %>"><strong>íšŒì›ë¡œê·¸ì¸</strong></td></tr>
-	<tr height="30">
-		<td width="110" bgcolor="<%=title_c %>" align="center">ì•„ì´ë”” <input type = "checkbox" value="IS"></td>
-		<td width="150" bgcolor="<%=value_c %>" align="center">
-		<%
-				Cookie[] cookie = request.getCookies();
-				String id = "";
-				if(cookie!=null){
-					for(Cookie cookies : cookie){
-						if(cookies.getName().equals("id"))
-							id = cookies.getValue();
-						}
-				}				
-		%>
-			<input type="text" name = "id" size = "15" maxlength="12" value="<%=id %>"></td>
-	</tr>
 	
-	<tr height="30">
-		<td width="110" bgcolor="<%=title_c %>" align="center">ë¹„ë°€ë²ˆí˜¸</td>
-		<td width="150" bgcolor="<%=value_c %>" align="center">
-			<input type = "password" name = "passwd" size ="15" maxlength="12"></td>
-	</tr>
-	
-	<tr height="30">
-	<td colspan="2" align="middle" bgcolor="<%=title_c %>">
-		<input type = "submit" value = "ë¡œê·¸ì¸">
-		<input type="reset" value = "ë‹¤ì‹œì…ë ¥">
-		<input type="button" value="íšŒì›ê°€ì…" onclick="javascript:window.location='inputForm.jsp'"></td>
-	</tr>
-</table>
-</form>
+	<%
+	Cookie[] cookie = request.getCookies();
+	String id = "";
+	if(cookie!=null){
+		for(Cookie cookies : cookie){
+			if(cookies.getName().equals("id"))
+				id = cookies.getValue();
+			}
+		}				
+	%>
+<div id="loginWrap">
+	<h1>Member Login</h1>
+	<form action="loginPro.jsp" method="post" name="myform" onsubmit="return checkIt();">
+		<fieldset>
+			<legend>·Î±×ÀÎ</legend>
+			<dl>
+				<dt>Id</dt>
+				<dd><input type="text" name="id" maxlength="10" value="<%=id %>" /></dd>
+				<dt>Password</dt>
+				<dd><input type="password" name="passwd" maxlength="10" /></dd>
+			</dl>
+			<div class="btnArea">
+				<input type="submit" name="Submit" value="Ok" />
+				<input type="reset" value="Reset" />
+				<input type="button" value="Join" onclick="javascript:window.location='inputForm.jsp'" />
+			</div>
+		</fieldset>
+	</form>
+</div>
+
+<%
+	} else {
+%>
+
+<!-- after login -->
+<div id="loginWrap">
+	<h1>Welcome to my world!</h1>
+	<div class="afterLogin">
+		<p><strong><%= session.getAttribute("memId") %></strong>´Ô È¯¿µÇÕ´Ï´Ù.</p>
+		<form action="logout.jsp" method="post">
+			<div class="btnArea">
+				<input type="submit" name="Submit" value="Logout" />
+				<input type="button" value="Modify" onclick="javascript:window.location='modify.jsp'" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<% } %>
 </body>
 </html>

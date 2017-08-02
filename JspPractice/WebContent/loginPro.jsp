@@ -1,7 +1,7 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ page import = "web.logon.LogonDBBean"%>
 
-<% request.setCharacterEncoding("UTF-8"); %>
+<% request.setCharacterEncoding("euc-kr"); %>
 
 <%
 
@@ -20,13 +20,13 @@
 		response.sendRedirect("main.jsp");
 	} else if(check==0){
 %>
-<script>
-	alert("비밀번호가 맞지 않습니다.");
+<script type="text/javascript">
+	alert("��й�ȣ�� ���� �ʽ��ϴ�.");
 	history.go(-1);
 </script>
 <% }else{ %>
-<script>
-	alert("아이디가 맞지 않습니다.");
+<script type="text/javascript">
+	alert("���̵� ���� �ʽ��ϴ�.");
 	history.go(-1);
 </script>
 <%} %>

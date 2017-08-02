@@ -1,10 +1,13 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="../view/color.jsp"%>
-<html>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+</head>
 <body>
 	<p>
-	<a href="modifyForm.jsp">ì •ë³´ìˆ˜ì •</a>
-	<a href="deleteForm.jsp">íšŒì›íƒˆí‡´</a>
+	<a href="modifyForm.jsp">Á¤º¸¼öÁ¤</a>
+	<a href="deleteForm.jsp">È¸¿øÅ»Åð</a>
 	</p>
 </body>
 </html>

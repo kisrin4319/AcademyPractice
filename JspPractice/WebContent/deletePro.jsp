@@ -1,50 +1,46 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page import="web.logon.*" %>
-<%@ include file = "../view/color.jsp" %>
-<html>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+	pageEncoding="EUC-KR"%>
+<%@ page import="web.logon.*"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>íšŒì› íƒˆí‡´</title>
-<link href="style.css" rel = "stylesheet" type="text/css">
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<title>È¸¿ø Å»Åğ</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
 </head>
-<%
-	String id = (String)session.getAttribute("memId");
-	String passwd = request.getParameter("passwd");
-	
-	LogonDBBean manager = LogonDBBean.getInstance();
-	int check = manager.deleteMember(id, passwd);
-	
-	if(check==1){
-		session.invalidate();
-%>
-<body bgcolor="<%=bodyback_c %>">
-	<form action="main.jsp" name = "userinput" method="post">
-		<table width="270" border="0" cellspacing ="0" cellpadding="5" align="center">
-			<tr bgcolor="<%=title_c %>">
-				<td height="39" align="center">
-				<font size="+1"><b>íšŒì›ì •ë³´ê°€ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.</b></font>
-				</td>
-			</tr>
+<body>
+	<div id="memberWrap">
+		<div class="innerDiv">
+			<h1>Member secession</h1>
+			<%
+				String id = (String) session.getAttribute("memId");
+				String passwd = request.getParameter("passwd");
 
-			<tr bgcolor="<%=value_c%>">
-				<td align="center">
-					<p>í‘í‘.... ì„œìš´í•©ë‹ˆë‹¤. ì•ˆë…•íˆ ê°€ì„¸ìš”.</p>
-					<meta http-equiv="Refresh" content="5;url=main.jsp">
-				</td>
-			</tr>
+				LogonDBBean manager = LogonDBBean.getInstance();
+				int check = manager.deleteMember(id, passwd);
 
-			<tr bgcolor="<%=value_c %>">
-				<td align="center">
-					<input type="submit" value="í™•ì¸">
-				</td>
-			</tr>
-		</table>
-	</form>
-	<%} else { %>
-	<script>	
-	alert("ë¹„ë°€ë²ˆí˜¸ê°€ ë§ì§€ ì•ŠìŠµë‹ˆë‹¤.");
-		history.go(-1);	
-	</script>
-	
-	<%} %>
+				if (check == 1) {
+					session.invalidate();
+			%>
+
+			<form action="main.jsp" name="userinput" method="post">
+				<p class="desc">È¸¿øÁ¤º¸°¡ »èÁ¦µÇ¾ú½À´Ï´Ù.</p>
+				<div class="btnArea2">
+					<input type="submit" value="Ok" class="btn" />
+				</div>
+			</form>
+			<%
+				} else {
+			%>
+			<script type="text/javascript">
+				alert("ºñ¹Ğ¹øÈ£°¡ ¸ÂÁö ¾Ê½À´Ï´Ù.");
+				history.go(-1);
+			</script>
+
+			<%
+				}
+			%>
+		</div>
+	</div>
 </body>
 </html>

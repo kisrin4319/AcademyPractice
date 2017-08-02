@@ -1,97 +1,91 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="../view/color.jsp"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <%@ page import="java.net.*"%>
 <html>
 <head>
-<title>메인입니다..</title>
-<link href="style.css" rel="stylesheet" type="text/css">
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<title>����</title>
+<link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<%
-try{
-   if(session.getAttribute("memId")==null){%>
-<script language="javascript">
+<body onLoad="focusIt();">
+	<%
+   if(session.getAttribute("memId")==null){
+   %>
+	<script type="text/javascript">
+		function focusIt() {
+			document.inform.id.focus();
+		}
 
-function focusIt()
-{     
-   document.inform.id.focus();
-}
+		function checkIt() {
+			inputForm = eval("document.inform");
+			if (!inputForm.id.value) {
+				alert("���̵� �Է��ϼ���..");
+				inputForm.id.focus();
+				return false;
+			}
+			if (!inputForm.passwd.value) {
+				alert("���̵� �Է��ϼ���..");
+				inputForm.passwd.focus();
+				return false;
+			}
+		}
+	</script>
 
-function checkIt()
-{
-   inputForm=eval("document.inform");
-   if(!inputForm.id.value){
-     alert("아이디를 입력하세요..");
-inputForm.id.focus();
-return false;
-   }
-   if(!inputForm.passwd.value){
-     alert("아이디를 입력하세요..");
-inputForm.passwd.focus();
-return false;
-   }
-}
-
-</script>
-
-
-				
-<body onLoad="focusIt();" bgcolor="<%=bodyback_c%>">
-	<table width="500" cellpadding="0" cellspacing="0" align="center"
-		border="1">
-		<tr>
-			<td width="300" bgcolor="<%=bodyback_c%>" height="20">&nbsp;</td>
-
-			<form name="inform" method="post" action="loginPro.jsp"
-				onSubmit="return checkIt();">
-
-				<td bgcolor="<%=title_c%>" width="100" align="right">아이디</td>
-				<td width="100" bgcolor="<%=value_c%>">
+	<div id="LoginWrap">
+		<h1>Member Login</h1>
+		<form name="inform" method="post" action="loginPro.jsp"
+			onSubmit="return checkIt();">
+			<fieldset>
+				<legend>�α���</legend>
+				<dl>
 				<%
-					Cookie[] cookie = request.getCookies();
-					String id = "";
-					if(cookie!=null){
-						for(Cookie cookies : cookie){
-							if(cookies.getName().equals("id"))
-								id = cookies.getValue();
-							}
-					}				
+				Cookie[] cookie = request.getCookies();
+				String id = "";
+				if(cookie!=null){
+					for(Cookie cookies : cookie){
+						if(cookies.getName().equals("id"))
+							id = cookies.getValue();
+						}
+				}
 				%>
-				<input type="text" name="id" size="15" maxlength="10" value="<%=id %>"></td>
-		</tr>
-		<tr>
-			<td rowspan="2" bgcolor="<%=bodyback_c%>" width="300">메인입니다.</td>
-			<td bgcolor="<%=title_c%>" width="100" align="right">패스워드</td>
-			<td width="100" bgcolor="<%=value_c%>">
-			<input type="password" name="passwd" size="15" maxlength="10"></td>
-		</tr>
-		<tr>
-			<td colspan="3" bgcolor="<%=title_c%>" align="center">
-			<input type="submit" name="Submit" value="로그인">
-			<input type="button" value="회원가입"	onclick="javascript:window.location='inputForm.jsp'">
-			ID저장<input type="checkbox" value = "IS">
-			</td>
-			</form>
-		</tr>
-	</table>
+					<dt>Id</dt>
+					<dd>
+						<input type="text" name="id" maxlength="10" value="<%=id %>" />
+					</dd>
+					<dt>Password</dt>
+					<dd>
+						<input type="password" name="passwd" maxlength="10" />
+					</dd>
+				</dl>
+				<div class="btnArea">
+					<input type="submit" name="Submit" value="Ok" /> <input
+						type="button" value="Join"
+						onclick="javascript:window.location='inputForm.jsp'" /> <input
+						type="button" value="Find id"
+						onclick="javascript:window.location='findId.jsp'" /> <input
+						type="button" value="Find pw"
+						onclick="javascript:window.location='findPw.jsp'" />
+				</div>
+			</fieldset>
+		</form>
+	</div>
 	<%}else{%>
-	<table width=500 cellpadding="0" cellspacing="0" align="center"
-		border="1">
-		<tr>
-			<td width="300" bgcolor="<%=bodyback_c%>" height="20">하하하</td>
-
-			<td rowspan="3" bgcolor="<%=value_c%>" align="center"><%=session.getAttribute("memId")%>님이
-				<br> 방문하셨습니다
-				<form method="post" action="logout.jsp">
-					<input type="submit" value="로그아웃"> <input type="button" value="회원정보변경" onclick="javascript:window.location='modify.jsp'">
-				</form></td>
-		</tr>
-		<tr>
-			<td rowspan="2" bgcolor="<%=bodyback_c%>" width="300">메인입니다.</td>
-		</tr>
-	</table>
-	<br>
-	<%}
-}catch(NullPointerException e){}
-%>
+	<!-- after login -->
+	<div id="LoginWrap">
+		<h1>Hello World!</h1>
+		<div class="afterLogin">
+			<p>
+				<strong><%=session.getAttribute("memId") %></strong>�� ȯ���մϴ�.
+			</p>
+			<form action="logout.jsp" method="post">
+				<div class="btnArea">
+					<input type="submit" name="Submit" value="Logout" />
+					<input type="button" value="Modify"	onclick="javascript:window.location='modifyForm.jsp'" />
+				</div>
+			</form>
+		</div>
+	</div>
+	<% } %>
 </body>
 </html>

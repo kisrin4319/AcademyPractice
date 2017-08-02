@@ -1,119 +1,110 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ page import="web.logon.*"%>
-<%@ include file="../view/color.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-<html>
-<head><title>íšŒì›ì •ë³´ìˆ˜ì •</title></head>
-<link href="style.css" rel = "stylesheet" type="text/css">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<title>È¸¿øÁ¤º¸¼öÁ¤</title>
+<link href="css/style.css" rel = "stylesheet" type="text/css"/>
 
 <script type="text/javascript">
 
 function checkIt() {
 	var userinput = eval("document.userinput");
 	if(!userinput.passwd.value){
-		alert("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
+		alert("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
 		return false;
 	}
 	if(userinput.passwd.value!= userinput.passwd2.value){
-		alert("ë¹„ë°€ë²ˆí˜¸ê°€ ê°™ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+		alert("ºñ¹Ğ¹øÈ£°¡ °°Áö ¾Ê½À´Ï´Ù.");
 		return false;
 	}
 	if(!userinput.name.value){
-		alert("ì‚¬ìš©ì ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”.");
+		alert("»ç¿ëÀÚ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä.");
 		return false;
 	}
 	if(!userinput.jumin1.value || !userinput.jumin2.value){
-		alert("ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
-		return false;
-	}
-	if(!userinput.zipcode.value){
-		alert("ìš°í¸ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
-		return false;
-	}
-	if(!userinput.address.value){
-		alert("ì£¼ì†Œë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
+		alert("ÁÖ¹Îµî·Ï¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
 		return false;
 	}
 }
+//¿ìÆí¹øÈ£ Ã¼Å©
+function zipCheck(){
+	url = "ZipCheck.jsp?check=y";
+	open(url,"post","toolbar=no ,width=500 ,height=300 ,directories=no,status=yes,scrollbars=yes,menubar=no");
+	}
 </script>
-
-
+</head>
+<body>
 <%
 	String id = (String) session.getAttribute("memId");
 	LogonDBBean manager = LogonDBBean.getInstance();
 	LogonDataBean c = manager.getMember(id);
-	/* c.setId(id); */
-	
 	try{
 %>
-
-<body bgcolor="<%=bodyback_c %>">
-<form action="modifyPro.jsp" name = "userinput" method="post" onsubmit="return checkIt()">
-
-	<table width="600" border="1" cellspacing="0" cellpadding="3" align="center">
+<div id="joinWrap">
+	<h1>Modify</h1>
+	<form action="modifyPro.jsp" name = "userinput" method="post" onsubmit="return checkIt()">
+<table>
+			<colgroup>
+				<col width="25%" />
+				<col width="*" />
+			</colgroup>
+			<tr>
+				<th><span class="star">*</span>¾ÆÀÌµğ</th>
+				<td><%= c.getId() %></td>
+			</tr>
+			<tr>
+				<th><span class="star">*</span>ºñ¹Ğ¹øÈ£</th>
+				<td><input type="password" name="passwd" maxlength="10" value="<%= c.getPasswd() %>" /></td>
+			</tr>
+			<tr>
+				<th><span class="star">*</span>ºñ¹Ğ¹øÈ£ È®ÀÎ</th>
+				<td><input type="password" name="passwd2" maxlength="10" value="<%= c.getPasswd() %>" /></td>
+			</tr>
+			<tr>
+				<th><span class="star">*</span>ÀÌ¸§</th>
+				<td><input type="text" name="name" maxlength="10" value="<%= c.getName() %>" /></td>
+			</tr>
+			<tr>
+				<th><span class="star">*</span>ÁÖ¹Îµî·Ï¹øÈ£</th>
+				<td><%= c.getJumin1() %> - <%= c.getJumin2() %></td>
+			</tr>
+			<tr>
+				<th>ÁÖ¼Ò</th>
+				<td>
+					<input type="text" name="zipcode" maxlength="7" value="<%= c.getZipcode() %>" class="w50" />
+					<span class="zipCheck"><input type="button" onclick="zipCheck()" /></span>
+					<span class="addr"><input type="text" name="address" maxlength="70" value="<%= c.getAddress() %>" class="w300" /></span>
+				</td>
+			</tr>
+			<tr>
+				<th>E-Mail</th>
+				<td>
+					<% if(c.getEmail() == null){%>
+						<input type="text" name="email" maxlength="50" class="w300" />
+					<%		
+						} else {
+					 %>
+					 	<input type="text" name="email" maxlength="50" value="<%= c.getEmail() %>" class="w300" />
+					<% } %>
+				</td>
+			</tr>
+			<tr>
+				<th>Blog</th>
+				<td>
+					<% if(c.getBlog() == null){%>
+						<input type="text" name="blog" maxlength="50" class="w300" />
+					<%		
+						} else {
+					 %>
+					 	<input type="text" name="blog" maxlength="50" value="<%= c.getBlog() %>" class="w300" />
+					<% } %>
+				</td>
+			</tr>
 		<tr>
-			<td colspan="2" height="39" bgcolor="<%=title_c %>" align="center">
-			<font size="+1"><b>íšŒì› ì •ë³´ìˆ˜ì •</b></font>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2" class="normal" align="center">íšŒì›ì˜ ì •ë³´ë¥¼ ìˆ˜ì •í•©ë‹ˆë‹¤.</td>
-		</tr>
-		<tr>
-			<td width="200" bgcolor="<%=value_c %>"><b>ì•„ì´ë”” ì…ë ¥</b></td>
-			<td width="400" bgcolor="<%=value_c %>"> </td>
-		</tr>
-				
-		<tr>
-			<td width="200"> ì‚¬ìš©ì ID </td>
-			<td width="400"><%=c.getId() %></td>
-		</tr>
-		
-		<tr>
-			<td width="200"> ë¹„ë°€ë²ˆí˜¸ </td>
-			<td width="400">
-				<input type="password" name = "passwd" size = "10" maxlength="10" value="<%=c.getPasswd() %>">
-			</td>
-		</tr>
-		<tr>
-			<td width="200" bgcolor="<%=value_c %>"><b>ê°œì¸ì •ë³´ ì…ë ¥</b></td>
-			<td width="400" bgcolor="<%=value_c %>" </td>
-		</tr>
-		<tr>
-			<td width="200"> ì‚¬ìš©ì ì´ë¦„ </td>
-			<td width="400">
-				<input type="text" name = "name" size = "15" maxlength="20" value="<%=c.getName() %>">
-			</td>
-		</tr>
-		<tr>
-			<td width="200">ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸</td>
-			<td width="400">
-				<%=c.getJumin1() %>-<%=c.getJumin2() %>
-			</td>
-		</tr>
-		<tr>
-			<td width="200">E-Mail</td>
-			<td width="400">
-			<%if(c.getEmail()==null){ %>
-		<input type="text" name = "email" size ="40" maxlength="30">
-		<%} else { %>
-			<input type="text" name = "email" size ="40" maxlength="30" value="<%=c.getEmail() %>">
-		<%} %>
-			</td>
-		 </tr>
-		 <tr>
-		 	<td width="200">Blog</td>
-		 	<td width="400">
-		 <%if(c.getBlog()==null) {%>
-		 <input type="text" name = "blog" size = "60" maxlength="50">
-		 <%} else { %>
-		 	<input type="text" name = "blog" size ="60" maxlength="50" value="<%=c.getBlog() %>">
-		 	<%} %>
-		 		</td>
-		 </tr>
-		 		
-		<tr>
-			<td width="200"> ìš°í¸ ë²ˆí˜¸ </td>
+			<td width="200"> ¿ìÆí ¹øÈ£ </td>
 			<td width="400">
 			<%if(c.getZipcode()==null) {%>
 			<input type="text" name ="zipcode" size = "7" maxlength="7">
@@ -124,7 +115,7 @@ function checkIt() {
 		</tr>
 		
 		<tr>
-			<td width="200"> ì£¼ì†Œ </td>
+			<td width="200"> ÁÖ¼Ò </td>
 			<td width="400">
 			<% if(c.getAddress()==null){ %>
 			<input type="text" name = "address" size = "100" maxlength="200">
@@ -133,14 +124,14 @@ function checkIt() {
 				<%} %>
 			</td>
 		</tr>
-		<tr>
-				<td colspan="2" align="center" bgcolor="<%=value_c %>">
-				<input type="submit" name = "modify" value ="ìˆ˜	ì •  ">
-				<input type="button" value = "ì·¨   ì†Œ" onclick="javascript:window.location='main.jsp'">
-				</td>
-		 </tr>			
-	</table>
+		</table>
+		<div class="btnArea">
+			<input type="submit" value="Ok" />
+			<input type="button" value="Cancel" onclick="javascript:window.location='main.jsp'" />
+			<input type="button" value="Member secession" onclick="javascript:window.location='deleteForm.jsp'" />
+		</div>
 	</form>
+	<%} catch(Exception e) {} %>
+	</div>
 </body>
-<%} catch(Exception e) {} %>
 </html>

@@ -1,10 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ page import="web.logon.*"%>
-<%@ include file="../view/color.jsp"%>
 
-<% request.setCharacterEncoding("UTF-8"); %>
-<html>
-<body>
+<% request.setCharacterEncoding("euc-kr"); %>
+
 <jsp:useBean id="member" class = "web.logon.LogonDataBean">
 	<jsp:setProperty name = "member" property="*"/>
 </jsp:useBean>
@@ -16,26 +14,23 @@
 	LogonDBBean manager = LogonDBBean.getInstance();
 	manager.updateMember(member);
 %>
-<link href = "style.css" rel = "stylesheet" type = "text/css">
-
-<table width="270" border="0" cellspacing ="0" cellpadding="5" align="center">
-	<tr bgcolor="<%=title_c %>">
-		<td height="39" align="center">
-	<font size="+1"><b>회원정보가 수정되었습니다.</b></font></td>
-	</tr>
-	<tr>
-		<td bgcolor="<%=value_c %>" align="center">
-			<p>입력하신 내용대로 수정이 완료되었습니다.</p>
-		</td>
-	</tr>
-	<tr>
-		<td bgcolor="<%=value_c %>" align="center">
-			<form>
-				<input type="button" value = "메인으로" onclick="window.location='main.jsp'">
-			</form>
-			5초후에 메인으로 이동합니다. <meta http-equiv="Refresh" content="5; url=main.jsp">
-		</td>
-	</tr>
-</table>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<title>ȸ������ �����Ϸ�</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="memberWrap">
+	<div class="innerDiv">
+		<h1>Modify</h1>
+		<p class="desc">ȸ�������� �����Ǿ����ϴ�.</p>
+		<form>
+			<div class="btnArea2"><input type="button" value="Go to home" onclick="javascript:window.location='main.jsp'" class="btn" /></div>
+		</form>
+		<p>5���Ŀ� �������� �̵��մϴ�.<meta http-equiv="Refresh" content="5;url=main.jsp"></p>
+	</div>
+</div>
 </body>
 </html>

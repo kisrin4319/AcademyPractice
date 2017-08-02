@@ -1,8 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@page import="java.sql.Timestamp"%>
-<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page import ="web.logon.LogonDBBean"%>
 
-<% request.setCharacterEncoding("UTF-8");%>
+<% request.setCharacterEncoding("euc-kr");%>
 
 <jsp:useBean id="member" class ="web.logon.LogonDataBean">
 	<jsp:setProperty name ="member" property="*"/>

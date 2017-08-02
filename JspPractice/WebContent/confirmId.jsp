@@ -1,10 +1,15 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ page import = "web.logon.LogonDBBean"%>
-<%@ include file = "../view/color.jsp"%>
-<html>
-<head><title>ID 중복확인</title></head>
-<link href="style.css" rel="stylesheet" type="text/css">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<title>ID �ߺ�Ȯ��</title>
+<link href="css/popup.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="idCheck">
+	<h1>ID �ߺ�Ȯ��</h1>
 <% request.setCharacterEncoding("UTF-8"); %>
 
 <%
@@ -15,49 +20,31 @@
 
 %>
 
-<body bgcolor="<%=bodyback_c %>">
-
 <%
 	if(check ==1){
 %>
-	<table width="270" border="0" cellspacing="0" cellpadding="5">
-		<tr bgcolor="<%=title_c %>">
-			<td height="39" ><%=id %> 이미 사용중인 아이디입니다.</td>
-		</tr> 
-	</table>
-	
 	<form name = "checkForm" method="post" action="confirmId.jsp">
-	<table width = "270" border="0" cellspacing="0" cellpadding="5">
-		<tr>
-		 <td bgcolor="<%=value_c %>" align="center">
-		 	다른 아이디를 선택하세요.<p>
-		 	<input type="text" size = "10" maxlength="12" name ="id">
-		 	<input type="submit" value = "ID중복확인">
-		 </td>
-		</tr>
-	</table>
+		<p class="desc"><strong><%=id %></strong>��(��) �̹� ������� ���̵��Դϴ�.<br /></p>
+		<div>
+			<input type="text" name="id" maxlength="12" class="inputText" />
+			<input type="submit" value="Check" class="btn" />
+		</div>
 	</form>
 	
 	<%
 	} else {
 	%>
-	<table width="270" border="0" cellspacing="0" cellpadding="5">
-		<tr bgcolor="<%=title_c %>">
-		<td align="center">
-		<p>입력하신 <%=id %> 는 사용하실 수 있는 ID입니다.</p>
-		<input type="button" value = "닫기" onclick="setid()">
-	</td>
-	</tr>
-	</table>
-	
+	<p class ="desc">�Է��Ͻ�<strong><%=id %></strong>��(��) ����� �� �ִ� ���̵��Դϴ�.</p>
+		<div><input type="button" value = "Close" onclick="setid()" class ="btn" /></div>
 <%
 	}
 %>
-</body>
-</html>
-<script language="javascript">
+</div>
+<script type="text/javascript">
 	function setid(){
 	opener.document.userinput.id.value="<%=id%>";
-self.close();
+	self.close();
 }
 </script>
+</body>
+</html>

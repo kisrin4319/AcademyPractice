@@ -1,56 +1,61 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="../view/color.jsp"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+	pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <html>
-<head><title>íšŒì›ê°€ì…</title></head>
-<link href="style.css" rel="stylesheet" type="text/css">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<title>È¸¿ø°¡ÀÔ</title>
+</head>
+<link href="css/style.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 	function checkIt(){
 		var userinput = eval("document.userinput");
 		if(!userinput.id.value){
-			alert("IDë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
+			alert("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä!");
 			return false;
 		}
 		
 		if(!userinput.passwd.value){
-			alert("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
+			alert("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä!");
 			return false;
 		}
 		if(userinput.passwd.value!= userinput.passwd2.value){
-			alert("ë¹„ë°€ë²ˆí˜¸ë¥¼ ë™ì¼í•˜ê²Œ ì…ë ¥í•˜ì„¸ìš”.");
+			alert("ºñ¹Ğ¹øÈ£¸¦ µ¿ÀÏÇÏ°Ô ÀÔ·ÂÇÏ¼¼¿ä!");
 			return false;
 		}
 		
 		if(!userinput.name.value){
-			alert("ì‚¬ìš©ì ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”.")
+			alert("ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä!")
 			return false;
 		}
 		
 		if(!userinput.jumin1.value || !userinput.jumin2.value){
-			alert("ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
+			alert("ÁÖ¹Îµî·Ï¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä!");
 			return false;
 		}
 		if(!userinput.zipcode.value){
-			alert("ìš°í¸ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
+			alert("¿ìÆí¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
 			return false;
 		}
 		if(!userinput.address.value){
-			alert("ì£¼ì†Œë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
+			alert("ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
 			return false;
 		}
 	}
 	
-	//ì•„ì´ë”” ì¤‘ë³µ ì—¬ë¶€ë¥¼ íŒë‹¨
+	//¾ÆÀÌµğ Áßº¹ ¿©ºÎ¸¦ ÆÇ´Ü
 	function openConfirmid(userinput) {
-		//ì•„ì´ë””ë¥¼ ì…ë ¥í–ˆëŠ”ì§€ ê²€ì‚¬
+		//¾ÆÀÌµğ¸¦ ÀÔ·ÂÇß´ÂÁö °Ë»ç
 		if(userinput.id.value==""){
-			alert("ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
+			alert("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
 			return;
 		}
 		
-		//urlê³¼ ì‚¬ìš©ì ì…ë ¥ idë¥¼ ì¡°í•©í•©ë‹ˆë‹¤.
+		//url°ú »ç¿ëÀÚ ÀÔ·Â id¸¦ Á¶ÇÕÇÕ´Ï´Ù.
 		url = "confirmId.jsp?id="+userinput.id.value;
 		
-		//ìƒˆë¡œìš´ ìœˆë„ìš°ë¥¼ ì—½ë‹ˆë‹¤.
+		//»õ·Î¿î À©µµ¿ì¸¦ ¿±´Ï´Ù.
 		open(url,"confirm","toolbar=no, location=no,status=no,menubar=no,scrollbars=no,"
 				+"resizable=no, width=300,height=200");
 	}
@@ -60,90 +65,60 @@
 		open(url,"post","toolbar=no, width=500,height=300,directories=no,status=yes,scrollbars=yes,menubar=no");
 	}
 </script>
-
-<body bgcolor="<%=bodyback_c %>">
-
-<form method="post" action="inputPro.jsp" name="userinput" onsubmit="return checkIt()">
- <table width="600" border="1" cellspacing="0" cellpadding="3" align = "center">
- 	<tr>
- 	<td colspan="2" height="39" align="center" bgcolor="<%=value_c %>">
- 		<font size="+1" ><b>íšŒì›ê°€ì…</b></font></td>
- 	</tr>
- 	<tr>
- 	 <td width="200" bgcolor="<%=value_c %>"><b>ì•„ì´ë”” ì…ë ¥</b></td>
- 	 <td width = "400" bgcolor="<%=value_c %>"> </td>
- 	 </tr>
- 
- 
- 	<tr>
- 		<td width="200"> ì‚¬ìš©ì ID </td>
- 		<td width = "400">
- 			<input type="text" name = "id" size = "10" maxlength="12">
- 			<input type="button" name = "confirm_id" value="IDì¤‘ë³µí™•ì¸" onclick="openConfirmid(this.form)">
- 		</td>
- 	</tr>
- 	<tr>
- 	 <td width="200">ë¹„ë°€ë²ˆí˜¸</td>
- 	 <td width="400">
- 	  <input type="password" name ="passwd" size  ="15" maxlength="12">
- 	  </td>
- 	 <tr>
- 	  <td width="200">ë¹„ë°€ë²ˆí˜¸ í™•ì¸</td>
- 	  <td width="400">
- 	  	<input type="password" name="passwd2" size="15" maxlength="12">
- 	  </td>
- 	 </tr>
- 	 
- 	 <tr>
- 	  <td width="200" bgcolor="<%=value_c %>"><b>ê°œì¸ì •ë³´ ì…ë ¥</b></td>
- 	  <td width="400" bgcolor="<%=value_c %>"> </td>
- 	 </tr>
- 	 
- 	 <tr>
- 	  <td width="200"> ì‚¬ìš©ì ì´ë¦„ </td>
- 	  <td width="400">
- 	   <input type = "text" name="name" size ="15" maxlength="10">
- 	  </td>
- 	 </tr>
- 	 <tr>
- 	  <td width="200"> ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸</td>
- 	  <td width="400">
- 	   <input type="text" name ="jumin1" size="7" maxlength="6">
- 	   -<input type="text" name ="jumin2" size="7" maxlength="7">
- 	   </td>
- 	  </tr>
- 	  <tr>
- 	   <td width="200">E-Mail</td>
- 	   <td width="400">
- 	   	<input type = "text" name="email" size="40" maxlength="30">
- 	   	</td>
- 	   	</tr>
- 	   	<tr>
- 	   	 <td width="200">Blog</td>
- 	   	 <td width="400">
- 	   	 	<input type="text" name="blog" size="60" maxlength="50">
- 	   	 </td>
- 	   	</tr>
- 	   	
- 	   	<tr>
- 	   		<td width="200">ìš°í¸ë²ˆí˜¸</td>
- 	   		<td> <input type="text" name = "zipcode" size="7">
- 	   				<input type="button" value = "ìš°í¸ë²ˆí˜¸ì°¾ê¸°" onclick="zipCheck()">
- 	   				ìš°í¸ë²ˆí˜¸ë¥¼ ê²€ìƒ‰ í•˜ì„¸ìš”.</td>
- 	   		</tr>
- 	    <tr>
- 	    	<td>ì£¼ì†Œ</td>
- 	    	<td><input type="text" name ="address" size="70">
- 	    	ì£¼ì†Œë¥¼ ì ì–´ ì£¼ì„¸ìš”.</td>
- 	    </tr>
- 	   	<tr>
- 	   		<td colspan="2" align="center" bgcolor="<%=value_c %>">
- 	   			<input type="submit" name ="confirm" value = "ë“±     ë¡">
- 	   			<input type = "reset" name = "reset" value = "ë‹¤ì‹œì…ë ¥">
- 	   			<input type="button" value = "ê°€ì… ì•ˆí•¨" onclick="javascript:window.location='main.jsp'">
- 	   		</td>
- 	   	</tr>
- </table>
- </form>
- </body>
+<div id="joinWrap">
+	<h1>Member Join</h1>
+	<form method="post" action="inputPro.jsp" name="userinput"
+		onsubmit="return checkIt()">
+		<table>
+			<colgroup>
+				<col width="25%" />
+				<col width="*" />
+			</colgroup>
+			<tr>
+				<th><span class="star">*</span>¾ÆÀÌµğ</th>
+				<td><input type="text" name="id" maxlength="10" /> <span
+					class="idCheck"><input type="button" name="confirm_id"
+						onclick="openConfirmid(this.form)" /></span></td>
+			</tr>
+			<tr>
+				<th><span class="star">*</span>ºñ¹Ğ¹øÈ£</th>
+				<td><input type="password" name="passwd" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<th><span class="star">*</span>ºñ¹Ğ¹øÈ£ È®ÀÎ</th>
+				<td><input type="password" name="passwd2" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<th><span class="star">*</span>ÀÌ¸§</th>
+				<td><input type="text" name="name" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<th><span class="star">*</span>ÁÖ¹Îµî·Ï¹øÈ£</th>
+				<td><input type="text" name="jumin1" maxlength="6" /> <span>
+						- </span> <input type="text" name="jumin2" maxlength="7" /></td>
+			</tr>
+			<tr>
+				<th>ÁÖ¼Ò</th>
+				<td><input type="text" name="zipcode" maxlength="7" class="w50" />
+					<span class="zipCheck"><input type="button"
+						onclick="zipCheck()" /></span> <span class="addr"><input
+						type="text" name="address" maxlength="70" class="w300" /></span></td>
+			</tr>
+			<tr>
+				<th>E-Mail</th>
+				<td><input type="text" name="email" maxlength="50" class="w300" /></td>
+			</tr>
+			<tr>
+				<th>Blog</th>
+				<td><input type="text" name="blog" maxlength="50" class="w300" /></td>
+			</tr>
+		</table>
+		<div class="btnArea">
+			<input type="submit" name="confirm" value="Ok" /> <input
+				type="reset" name="reset" value="Reset" /> <input type="button"
+				value="Cancel" onclick="javascript:window.location='main.jsp'" />
+		</div>
+	</form>
+</div>
+</body>
 </html>
