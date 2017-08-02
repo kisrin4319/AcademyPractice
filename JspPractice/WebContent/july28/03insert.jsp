@@ -12,7 +12,7 @@
 	
 	String memberID	= 	request.getParameter("memberID");
 	String password	=	request.getParameter("password");
-	String name		=	request.getParameter("name");
+	String name	=	request.getParameter("name");
 	String email	=	request.getParameter("email");
 	
 	/* Class.forName("oracle.jdbc.driver.OracleDriver"); */
@@ -40,9 +40,9 @@
 %>  
 <html>
 <head>
-<title>»ðÀÔ</title>
+<title>ì‚½ìž…</title>
 </head>
 <body>
-MEMBER Å×ÀÌºí¿¡ »õ·Î¿î ·¹ÄÚµå¸¦ »ðÀÔÇß½À´Ï´Ù.
+MEMBER í…Œì´ë¸”ì— ìƒˆë¡œìš´ ë ˆì½”ë“œë¥¼ ì‚½ìž…í–ˆìŠµë‹ˆë‹¤.
 </body>
 </html>

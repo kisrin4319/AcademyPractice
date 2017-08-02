@@ -1,4 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>	
 <p>
-02sub.jsp¿¡¼­ »ı¼ºÇÑ ³»¿ë.
+02sub.jspì—ì„œ ìƒì„±í•œ ë‚´ìš©.
 </p>
