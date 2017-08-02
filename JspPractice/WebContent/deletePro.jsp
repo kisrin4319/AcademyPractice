@@ -24,6 +24,14 @@
 				<font size="+1"><b>회원정보가 삭제되었습니다.</b></font>
 				</td>
 			</tr>
+
+			<tr bgcolor="<%=value_c%>">
+				<td align="center">
+					<p>흑흑.... 서운합니다. 안녕히 가세요.</p>
+					<meta http-equiv="Refresh" content="5;url=main.jsp">
+				</td>
+			</tr>
+
 			<tr bgcolor="<%=value_c %>">
 				<td align="center">
 					<input type="submit" value="확인">

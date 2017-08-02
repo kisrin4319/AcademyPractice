@@ -26,6 +26,14 @@ function checkIt() {
 		alert("주민등록번호를 입력하세요.");
 		return false;
 	}
+	if(!userinput.zipcode.value){
+		alert("우편번호를 입력하세요.");
+		return false;
+	}
+	if(!userinput.address.value){
+		alert("주소를 입력하세요.");
+		return false;
+	}
 }
 </script>
 
@@ -34,6 +42,7 @@ function checkIt() {
 	String id = (String) session.getAttribute("memId");
 	LogonDBBean manager = LogonDBBean.getInstance();
 	LogonDataBean c = manager.getMember(id);
+	/* c.setId(id); */
 	
 	try{
 %>
@@ -101,13 +110,35 @@ function checkIt() {
 		 	<input type="text" name = "blog" size ="60" maxlength="50" value="<%=c.getBlog() %>">
 		 	<%} %>
 		 		</td>
-		 		</tr>
-		 		<tr>
-		 			<td colspan="2" align="center" bgcolor="<%=value_c %>">
-		 			<input type="submit" name = "modify" value ="수	정  ">
-		 			<input type="button" value = "취   소" onclick="javascript:window.location='main.jsp'">
-		 			</td>
-		 		</tr>			
+		 </tr>
+		 		
+		<tr>
+			<td width="200"> 우편 번호 </td>
+			<td width="400">
+			<%if(c.getZipcode()==null) {%>
+			<input type="text" name ="zipcode" size = "7" maxlength="7">
+			<%} else { %>
+				<input type="text" name = "zipcode" size = "7" value="<%=c.getZipcode() %>">
+				<%} %>
+			</td>
+		</tr>
+		
+		<tr>
+			<td width="200"> 주소 </td>
+			<td width="400">
+			<% if(c.getAddress()==null){ %>
+			<input type="text" name = "address" size = "100" maxlength="200">
+			<%} else { %>
+				<input type="text" name = "address" size = "100" maxlength="200" value="<%=c.getAddress() %>">
+				<%} %>
+			</td>
+		</tr>
+		<tr>
+				<td colspan="2" align="center" bgcolor="<%=value_c %>">
+				<input type="submit" name = "modify" value ="수	정  ">
+				<input type="button" value = "취   소" onclick="javascript:window.location='main.jsp'">
+				</td>
+		 </tr>			
 	</table>
 	</form>
 </body>

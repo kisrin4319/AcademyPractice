@@ -1,6 +1,11 @@
 package web.logon;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class LogonDBBean {
 
@@ -26,7 +31,7 @@ public class LogonDBBean {
 		try {
 			conn = getConnection();
 			
-			pstmt = conn.prepareStatement("insert into members values (?,?,?,?,?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into members(id,passwd,name,jumin1,jumin2,email,blog,reg_date,zipcode,address) values (?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString(1, member.getId());
 			pstmt.setString(2, member.getPasswd());
 			pstmt.setString(3, member.getName());
@@ -35,6 +40,8 @@ public class LogonDBBean {
 			pstmt.setString(6, member.getEmail());
 			pstmt.setString(7, member.getBlog());
 			pstmt.setTimestamp(8, member.getReg_date());
+			pstmt.setString(9, member.getZipcode());
+			pstmt.setString(10, member.getAddress());
 			pstmt.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -123,6 +130,8 @@ public class LogonDBBean {
 				member.setEmail(rs.getString("email"));
 				member.setBlog(rs.getString("blog"));
 				member.setReg_date(rs.getTimestamp("reg_date"));
+				member.setZipcode(rs.getString("zipcode"));
+				member.setAddress(rs.getString("address"));
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -141,13 +150,14 @@ public class LogonDBBean {
 		try {
 			conn = getConnection();
 			
-			pstmt = conn.prepareStatement("update MEMBERS set passwd=?,name=?,email=?,blog=? where id=?");
+			pstmt = conn.prepareStatement("update MEMBERS set passwd=?,name=?,email=?,blog=?,zipcode=?,address=? where id=?");
 			pstmt.setString(1, member.getPasswd());
 			pstmt.setString(2, member.getName());
 			pstmt.setString(3, member.getEmail());
-			pstmt.setString(4, member.getBlog());
-			pstmt.setString(5, member.getId());
-			
+			pstmt.setString(4, member.getBlog());			
+			pstmt.setString(5, member.getZipcode());
+			pstmt.setString(6, member.getAddress());
+			pstmt.setString(7, member.getId());
 			pstmt.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -187,5 +197,67 @@ public class LogonDBBean {
 			if(conn!= null) try {conn.close();} catch(SQLException ex) {}
 		}
 		return -1;
+	}
+	public ArrayList<ZipcodeBean> zipcodeRead(String area3) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<ZipcodeBean> zipList = new ArrayList<ZipcodeBean>();
+		
+		try {
+			conn = getConnection();
+			//pstmt = conn.prepareStatement("select * from zipcode where area3 like '"+area3+"%'");
+			pstmt = conn.prepareStatement("select * from zipcode where area3 like ?");
+			pstmt.setString(1,area3+"%");
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ZipcodeBean tempZipcode = new ZipcodeBean();
+				tempZipcode.setZipcode(rs.getString("zipcode"));
+				tempZipcode.setArea1(rs.getString("area1"));
+				tempZipcode.setArea2(rs.getString("area2"));
+				tempZipcode.setArea3(rs.getString("area3"));
+				tempZipcode.setArea4(rs.getString("area4"));
+				zipList.add(tempZipcode);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if(rs!=null) try {rs.close();} catch(SQLException ex) {}
+			if(pstmt!=null) try {pstmt.close();} catch(SQLException ex) {}
+			if(conn!=null) try {conn.close();} catch(SQLException ex) {}
+		}
+		return zipList;
+	}
+	public LogonDataBean findId(String email) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		LogonDataBean member = null;
+		try {
+			conn = getConnection();
+			
+			pstmt = conn.prepareStatement("select * from MEMBERS where email = ?");
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				member = new  LogonDataBean();
+				member.setId(rs.getString("id"));
+				member.setPasswd(rs.getString("passwd"));
+				member.setName(rs.getString("name"));
+				member.setJumin1(rs.getString("jumin1"));
+				member.setJumin2(rs.getString("jumin2"));
+				member.setEmail(rs.getString("email"));
+				member.setBlog(rs.getString("blog"));
+				member.setReg_date(rs.getTimestamp("reg_date"));
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if(rs!=null)	try {rs.close();}	 catch(SQLException ex) {}
+			if(pstmt!=null)	try {pstmt.close();} catch(SQLException ex) {}
+			if(conn!=null)	try {conn.close();}	 catch(SQLException ex) {}
+		}
+		return member;
 	}
 }
