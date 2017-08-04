@@ -228,7 +228,7 @@ public class LogonDBBean {
 		}
 		return zipList;
 	}
-	public LogonDataBean findId(String email) throws Exception {
+	public LogonDataBean findId(String name,String email) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -236,12 +236,41 @@ public class LogonDBBean {
 		try {
 			conn = getConnection();
 			
-			pstmt = conn.prepareStatement("select * from MEMBERS where email = ?");
-			pstmt.setString(1, email);
+			pstmt = conn.prepareStatement("select id from MEMBERS where name=? and email = ?");
+			pstmt.setString(1, name);
+			pstmt.setString(2, email);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				member = new  LogonDataBean();
+				member = new LogonDataBean();
+				member.setId(rs.getString("id"));
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if(rs!=null)	try {rs.close();}	 catch(SQLException ex) {}
+			if(pstmt!=null)	try {pstmt.close();} catch(SQLException ex) {}
+			if(conn!=null)	try {conn.close();}	 catch(SQLException ex) {}
+		}
+		return member;
+	}
+	
+	public LogonDataBean findPw(String id,String name,String email) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		LogonDataBean member = null;
+		try {
+			conn = getConnection();
+			
+			pstmt = conn.prepareStatement("select * from MEMBERS where id=? and name=? and email = ?");
+			pstmt.setString(1, id);
+			pstmt.setString(2, name);
+			pstmt.setString(3, email);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				member = new LogonDataBean();
 				member.setId(rs.getString("id"));
 				member.setPasswd(rs.getString("passwd"));
 				member.setName(rs.getString("name"));
@@ -250,6 +279,8 @@ public class LogonDBBean {
 				member.setEmail(rs.getString("email"));
 				member.setBlog(rs.getString("blog"));
 				member.setReg_date(rs.getTimestamp("reg_date"));
+				member.setZipcode(rs.getString("zipcode"));
+				member.setAddress(rs.getString("address"));
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
