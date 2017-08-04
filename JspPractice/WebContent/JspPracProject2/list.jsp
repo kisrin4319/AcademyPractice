@@ -70,6 +70,7 @@
 	</tr>
 	
 <%
+	try {
 	for(int i =0 ; i<articleList.size();i++){
 		BoardDataBean article = (BoardDataBean)articleList.get(i);	
 %>
@@ -102,8 +103,16 @@
 	  </tr>
 	  <%} %>   
 </table>
-
-<%} %>
+<%}
+ catch(Exception e){
+	int prePage = Integer.parseInt(pageNum);
+	prePage--;
+	%>
+	<meta http-equiv="Refresh" content="0;url=list.jsp?pageNum=<%=prePage %>">
+	<%
+}
+%>
+<% } %>
 
 
 <%
@@ -128,6 +137,7 @@
 		}
 	}
 %>
+
 </center>
 </body>
 </html>

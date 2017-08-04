@@ -12,7 +12,6 @@
 	
 	BoardDBBean dbPro = BoardDBBean.getInstance();
 	int check = dbPro.deleteArticle(num, passwd);
-	List articleList = null;
 	if(check==1){
 %>
 <meta http-equiv="Refresh" content="0;url=list.jsp?pageNum=<%=pageNum %>">
