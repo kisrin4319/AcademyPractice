@@ -80,6 +80,7 @@ public class BoardDBBean {
 			if(conn!=null) try {conn.close();} catch(SQLException e) {}
 			}
 	}
+	
 	//페이징을 위해서 전체 DB에 입력된 행의 수가 필요함
 	public int getArticleCount() throws Exception {
 		Connection conn = null;
@@ -89,6 +90,30 @@ public class BoardDBBean {
 		try {
 			conn = getConnection();
 			String query = "select count(*) from board";
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return rs.getInt(1); //페이지의 갯수 반환
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) try {rs.close();} catch(SQLException e) {}
+			if(pstmt!=null) try {pstmt.close();} catch(SQLException e) {}
+			if(conn!=null) try {conn.close();} catch(SQLException e) {}
+		}
+		return 0;
+	}
+	public int getArticleCount(String searchKeyword) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			String query = "select count(*) from board where content like = ?";
+			pstmt.setString(1, searchKeyword+"%");
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			
@@ -161,7 +186,7 @@ public class BoardDBBean {
 		pstmt=conn.prepareStatement("select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount,r "+
 									"from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r "+
 									"from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount "+
-							"from board order by ref desc, re_step asc) order by ref desc,re_step asc) where r>= ? and r<=? ");
+									"from board order by ref desc, re_step asc) order by ref desc,re_step asc) where r>= ? and r<=? ");
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
 			rs = pstmt.executeQuery();
@@ -309,4 +334,6 @@ public class BoardDBBean {
 		}
 	return -1;
 	}
+	
+	
 }

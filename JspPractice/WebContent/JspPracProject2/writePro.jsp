@@ -9,19 +9,10 @@
 </jsp:useBean>
 
 <%
-	article.setReg_date(new Timestamp(System.currentTimeMillis()));
-	article.setIp(request.getRemoteAddr());
+	article.setReg_date(new Timestamp(System.currentTimeMillis())); //작성 날짜
+	article.setIp(request.getRemoteAddr()); //IP 설정
 	
 	BoardDBBean dbPro = BoardDBBean.getInstance();
 	dbPro.insertArticle(article);
 	response.sendRedirect("list.jsp");
 %>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>

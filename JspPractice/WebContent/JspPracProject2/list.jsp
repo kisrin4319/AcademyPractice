@@ -6,12 +6,12 @@
 <%@ include file ="../view/color.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%!
-	int pageSize = 5;
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	int pageSize = 5; // 한 페이지에 보여줄 글의 갯수
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm"); //날짜 표현 형식 지정
 %>
 <%
-	String pageNum = request.getParameter("pageNum");
-	if(pageNum == null){
+	String pageNum = request.getParameter("pageNum"); //pageNum 파라미터를 pageNum으로 선언
+	if(pageNum == null){ // 만약 pageNum 이 없다면(전송받지 못한다면) pageNum 을 1로 지정
 		pageNum ="1";
 	}
 	int currentPage = Integer.parseInt(pageNum);
@@ -20,10 +20,11 @@
 	int endRow = currentPage * pageSize;
 	int count = 0;
 	int number = 0;
-	
+	int searchCount =0;
 	List articleList = null;
 	BoardDBBean dbPro = BoardDBBean.getInstance();
 	count = dbPro.getArticleCount();
+	
 	if(count>0){
 		articleList = dbPro.getArticles(startRow, endRow);
 	}
@@ -39,7 +40,7 @@
 <link href="style.css" rel ="stylesheet" type = "text/css">
 </head>
 <body bgcolor="<%=bodyback_c%>">
-<center><b>글목록(전체  글: <%=count %>)</b>
+<center><b>글목록(전체  글: <%=count %>)</b> <!-- 전체 글 갯수  -->
 <table width="700">
 <tr>
 	<td align="right" bgcolor="<%=value_c %>">
@@ -49,7 +50,7 @@
 
 <%
 
-	if(count ==0){
+	if(count ==0){ /*전체 글의 갯수가 0개 라면  */
 %>
 <table width="700" border="1" cellpadding="0" cellspacing="0">
 <tr>
@@ -58,7 +59,7 @@
 	</td>
 </table>
 
-<% }else { %>
+<% }else { %> <!--  전체글의 갯수가 0개 이상이라면 -->
 <table border="1" width="700" cellpadding="0" cellspacing="0" align="center">
 	<tr height="30" bgcolor="<%=value_c %>">
 		<td align="center" width="50" >번 호</td>
@@ -87,13 +88,15 @@
 	<img src="images/level.gif" width="<%=wid %>" height="16" >
 	<img src="images/re.gif">
 	
-<%} else { %>
+<%} else{ /* 메인 글 이라면 */
+	
+%> 
 	<img src ="images/level.gif" width="<%=wid %>" height="16">
 <% } %>
 
-	<a href ="content.jsp?num=<%=article.getNum() %>&pageNum=<%=currentPage %>">
+	<a href ="content.jsp?num=<%=article.getNum() %>&pageNum=<%=currentPage %>"> <!-- 게시글에 대한 정보를 가져오는 곳  -->
 			<%=article.getSubject() %></a>
-		<% if(article.getReadcount()>=20){ %>
+		<% if(article.getReadcount()>=20){ %> <!-- 조회수가 20이 넘어가면 Hot 사진 추가 -->
 	   <img src = "images/hot.gif" border="0" height="16"><%} %> </td>
 	   <td align="center" width="100">
 	   	<a href="mailto:<%=article.getEmail() %>"><%=article.getWriter() %></a></td>
@@ -105,7 +108,7 @@
 </table>
 <%}
  catch(Exception e){
-	int prePage = Integer.parseInt(pageNum);
+	int prePage = Integer.parseInt(pageNum); 
 	prePage--;
 	%>
 	<meta http-equiv="Refresh" content="0;url=list.jsp?pageNum=<%=prePage %>">
@@ -137,7 +140,38 @@
 		}
 	}
 %>
+<br>
+<script type="text/javascript">
 
+	function checkIt() {
+		if(document.search.keyword.value==""){
+			alert('검색어를 입력하세요.');
+			document.search.keyword.focus();
+			return false;
+		}
+	}
+</script>
+<form action ="list.jsp?pageNum=<%=pageNum %>" name = "search" onsubmit=" return checkIt()">
+	<select name = "keyField">
+		<option value = "subject" name ="1">제목 </option>
+		<option value = "writer" name ="2">이름</option>
+		<option value = "content" name="3">내용</option>
+	</select>
+	<input type="text" name = "keyword"/>
+	<input type="submit" value = "검 색" />
+	</form>
+<%-- <%
+	String keyword = request.getParameter("keyword");
+	searchCount = dbPro.getArticleCount(searchKeyword);
+	int n = Integer.parseInt(request.getParameter("
+	
+	if(searchCount!=0){
+		out.println("조건에 맞는 글이 없습니다.");
+		%>
+	<meta http-equiv="Refresh" content="0;url=list.jsp?pageNum=<%=currentPage %>"
+	<%
+	}
+	%> --%>
 </center>
 </body>
 </html>

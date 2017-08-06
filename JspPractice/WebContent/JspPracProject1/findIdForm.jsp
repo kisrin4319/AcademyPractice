@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
-<title>비밀번호 찾기</title>
+<title>아이디 찾기</title>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	function checkIt() {

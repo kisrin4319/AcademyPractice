@@ -10,7 +10,7 @@
 <title>게시판</title>
 <link href="style.css" rel="stylesheet" type="text/css">
 </head>
-
+<!-- list.jsp 에서 넘어오는 정보들을 세팅 -->
 <%
 	int num = Integer.parseInt(request.getParameter("num"));
 	String pageNum = request.getParameter("pageNum");
@@ -57,11 +57,11 @@
 		</tr>
 		<tr height="30">
 			<td colspan="4" bgcolor="<%=value_c %>" align="right">
-			<input type="button" value ="글수정" onclick="document.location.href='updateForm.jsp?num=<%=article.getNum() %>&pageNum=<%=pageNum %>'">
+			<input type="button" value ="글수정" onclick="document.location.href='updateForm.jsp?num=<%=article.getNum() %>&pageNum=<%=pageNum %>'"> <!-- updateForm.jsp로 해당페이지 전달 -->
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="button" value ="글삭제" onclick="document.location.href='deleteForm.jsp?num=<%=article.getNum() %>&pageNum=<%=pageNum %>'">
+			<input type="button" value ="글삭제" onclick="document.location.href='deleteForm.jsp?num=<%=article.getNum() %>&pageNum=<%=pageNum %>'"> <!-- deleteForm.jsp로 해당페이지 전달 -->
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="button" value ="답글쓰기" onclick="document.location.href='writeForm.jsp?num=<%=num %>&ref=<%=ref %>&re_step=<%=re_step%>&re_level=<%=re_level%>'">
+			<input type="button" value ="답글쓰기" onclick="document.location.href='writeForm.jsp?num=<%=num %>&ref=<%=ref %>&re_step=<%=re_step%>&re_level=<%=re_level%>'"> <!-- writeForm.jsp로 해당페이지 전달 -->
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="button" value ="글목록" onclick="document.location.href='list.jsp?pageNum=<%=pageNum %>'">
 			</td>

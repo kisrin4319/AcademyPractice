@@ -12,7 +12,7 @@
 
 이 페이지는 from.jsp가 생성한 것입니다.
 
-<jsp:forward page="../to/to.sjp"/>
+<jsp:forward page="../to/18viewTime.jsp"/>
 
 </body>
 </html>
