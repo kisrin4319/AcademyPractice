@@ -10,6 +10,7 @@
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm"); //날짜 표현 형식 지정
 %>
 <%
+	
 	String pageNum = request.getParameter("pageNum"); //pageNum 파라미터를 pageNum으로 선언
 	if(pageNum == null){ // 만약 pageNum 이 없다면(전송받지 못한다면) pageNum 을 1로 지정
 		pageNum ="1";
@@ -20,13 +21,34 @@
 	int endRow = currentPage * pageSize;
 	int count = 0;
 	int number = 0;
-	int searchCount =0;
+	int n =0;
 	List articleList = null;
+	List searchList = null;
+	String keyword = request.getParameter("keyword");
+	if(keyword==null){
+		keyword = "";
+	}
+	else{
+		n = Integer.parseInt(request.getParameter("keyField"));
+	}
+	
 	BoardDBBean dbPro = BoardDBBean.getInstance();
-	count = dbPro.getArticleCount();
+	CommentDBBean cdb=CommentDBBean.getInstance();
+	if(keyword.equals("") || keyword == null){
+		count = dbPro.getArticleCount();
+	}
+	else{
+		count = dbPro.getArticleCount(n, keyword);
+	}
 	
 	if(count>0){
+		
+		if(keyword.equals("") || keyword == null){
 		articleList = dbPro.getArticles(startRow, endRow);
+		}
+		else{
+			articleList = dbPro.getArticles(startRow, endRow, n, keyword);
+		}
 	}
 	
 	number = count-(currentPage-1)*pageSize;
@@ -72,30 +94,39 @@
 	
 <%
 	try {
-	for(int i =0 ; i<articleList.size();i++){
-		BoardDataBean article = (BoardDataBean)articleList.get(i);	
+	for(int i =0 ; i<articleList.size();i++)
+	{
+		BoardDataBean article = (BoardDataBean)articleList.get(i);
+		int com_count = cdb.getCommentCount(article.getNum());
 %>
 
 	<tr height="30">
 		<td align="center" width="50"><%=number-- %></td>
-		<td width="250">
 		
+	<td align="left">		
 <%
 	int wid = 0;
-	if(article.getRe_level()>0){ //답변글이라면...
+	if(article.getRe_level()>0)
+	{ //답변글이라면...
 		wid = 5*(article.getRe_level());
 %>
 	<img src="images/level.gif" width="<%=wid %>" height="16" >
 	<img src="images/re.gif">
 	
-<%} else{ /* 메인 글 이라면 */
-	
+<%	}
+	else
+	{ /* 메인 글 이라면 */	
 %> 
 	<img src ="images/level.gif" width="<%=wid %>" height="16">
-<% } %>
-
+<%  } %>
+<% if(com_count >0) { %>
+	<a href ="content.jsp?num=<%=article.getNum() %>&pageNum=<%=currentPage %>"> <!-- 게시글에 대한 정보를 가져오는 곳  -->
+			<%=article.getSubject() %>[<%=com_count %>]</a>
+<% } else { %>
 	<a href ="content.jsp?num=<%=article.getNum() %>&pageNum=<%=currentPage %>"> <!-- 게시글에 대한 정보를 가져오는 곳  -->
 			<%=article.getSubject() %></a>
+		<%} %>
+	
 		<% if(article.getReadcount()>=20){ %> <!-- 조회수가 20이 넘어가면 Hot 사진 추가 -->
 	   <img src = "images/hot.gif" border="0" height="16"><%} %> </td>
 	   <td align="center" width="100">
@@ -104,10 +135,10 @@
 	   <td align="center" width="50"><%=article.getReadcount() %></td>
 	   <td align="center" width="100"><%=article.getIp() %></td>
 	  </tr>
-	  <%} %>   
+	  <%}%>   
 </table>
 <%}
- catch(Exception e){
+	catch(Exception e){
 	int prePage = Integer.parseInt(pageNum); 
 	prePage--;
 	%>
@@ -127,51 +158,65 @@
 	int endPage = startPage + pageBlock-1;
 	if(endPage> pageCount) endPage = pageCount;
 	
-	if(startPage>5) {  %>
-	<a href="list.jsp?pageNum=<%=startPage-5 %>">[이전]</a>	
-<%	}
-	for(int i = startPage; i<=endPage;i++){%>
-	<a href="list.jsp?pageNum=<%=i %>">[<%=i %>]</a>
-<%
+	if(startPage>5) {
+		if(keyword.equals("") || keyword == null)
+		{
+		%>
+			<a href="list.jsp?pageNum=<%=startPage-5 %>">[이전]</a>	
+		<%	
+		}
+		else
+		{
+		%>
+		<a href="list.jsp?pageNum=<%=startPage - 5 %>&keyword=<%=keyword %>&n=<%=n %>">[이전]</a>
+		<%
+		}
+		%>
+ <%
 	}
-	if(endPage<pageCount){ %>
+	for(int i = startPage; i<=endPage;i++){
+		if(keyword.equals("") || keyword == null)
+		{
+	%>
+	<a href="list.jsp?pageNum=<%=i %>">[<%=i %>]</a>
+	<%
+	}
+		else
+		{
+	%>
+	<a href="list.jsp?pageNum=<%=i %>&keyword=<%=keyword %>&n=<%=n %>">[<%=i %>]</a>
+	<%	
+		}
+	%>
+<% }	
+	if(endPage<pageCount){ 
+	//다음페이지
+	if(keyword.equals("") || keyword == null)
+	{
+%>
 	<a href="list.jsp?pageNum=<%=startPage+5 %>">[다음]</a>
 <%
 		}
+	else
+	{
+%>
+	<a href="list.jsp?pageNum=<%=startPage+5 %>&keyword=<%=keyword %>&n=<%=n %>">[다음]</a>
+<%
+	}
+}
 	}
 %>
 <br>
-<script type="text/javascript">
 
-	function checkIt() {
-		if(document.search.keyword.value==""){
-			alert('검색어를 입력하세요.');
-			document.search.keyword.focus();
-			return false;
-		}
-	}
-</script>
-<form action ="list.jsp?pageNum=<%=pageNum %>" name = "search" onsubmit=" return checkIt()">
-	<select name = "keyField">
-		<option value = "subject" name ="1">제목 </option>
-		<option value = "writer" name ="2">이름</option>
-		<option value = "content" name="3">내용</option>
-	</select>
-	<input type="text" name = "keyword"/>
-	<input type="submit" value = "검 색" />
-	</form>
-<%-- <%
-	String keyword = request.getParameter("keyword");
-	searchCount = dbPro.getArticleCount(searchKeyword);
-	int n = Integer.parseInt(request.getParameter("
-	
-	if(searchCount!=0){
-		out.println("조건에 맞는 글이 없습니다.");
-		%>
-	<meta http-equiv="Refresh" content="0;url=list.jsp?pageNum=<%=currentPage %>"
-	<%
-	}
-	%> --%>
+<form>
+   <select name = "keyField">
+      <option value = "0">작성자 </option>
+      <option value = "1">제목</option>
+      <option value = "2">내용</option>
+   </select>
+   <input type="text" name = "keyword" size ="15" maxlength="30"/>
+   <input type="submit" value = "검 색" />
+   </form>
 </center>
 </body>
 </html>
