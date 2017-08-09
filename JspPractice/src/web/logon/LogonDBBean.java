@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+import web.board.BoardDataBean;
 
 public class LogonDBBean {
 
@@ -141,6 +144,147 @@ public class LogonDBBean {
 			if(conn!=null)	try {conn.close();}	 catch(SQLException ex) {}
 		}
 		return member;
+	}
+	public int getmemberCount() throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			String query = "select count(*) from members";
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) try {rs.close();} catch(SQLException e) {}
+			if(pstmt!=null) try {pstmt.close();} catch(SQLException e) {}
+			if(conn!=null) try {conn.close();} catch(SQLException e) {}
+		}
+		return 0;
+	}
+	public int getMemberCount(String keyword) throws Exception{
+		Connection conn =null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			System.out.println(keyword);
+			String query = "select count(*) from members where id like '%"+keyword+"%' OR name like '%"+keyword+"%' OR address like '%"+keyword+"%'";
+			
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				System.out.println(rs.getInt(1));
+				return rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) try {rs.close();} catch(SQLException e) {}
+			if(pstmt!=null) try {pstmt.close();} catch(SQLException e) {}
+			if(conn!=null) try {conn.close();} catch(SQLException e) {}
+		}
+		return 0;
+	}
+	public List<LogonDataBean> getMembers(int start,int end) throws Exception{
+		 Connection conn = null;
+		 PreparedStatement pstmt = null;
+		 ResultSet rs = null;
+		 List<LogonDataBean> memberList = null;
+		 
+		 try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select id,passwd,name,jumin1,jumin2,email,blog,reg_date,zipcode,address,r "+
+									"from (select id,passwd,name,jumin1,jumin2,email,blog,reg_date,zipcode,address,rownum r "+
+									"from (select id,passwd,name,jumin1,jumin2,email,blog,reg_date,zipcode,address "+
+									"from members order by id asc) order by id asc) where r>= ? and r<=? ");
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				memberList = new ArrayList<LogonDataBean>(end);
+				do {
+					LogonDataBean member = new LogonDataBean();
+					member.setId(rs.getString("id"));
+					member.setPasswd(rs.getString("passwd"));
+					member.setName(rs.getString("name"));
+					member.setJumin1(rs.getString("jumin1"));
+					member.setJumin2(rs.getString("jumin2"));
+					member.setEmail(rs.getString("email"));
+					member.setBlog(rs.getString("blog"));
+					member.setReg_date(rs.getTimestamp("reg_date"));
+					member.setZipcode(rs.getString("zipcode"));
+					member.setAddress(rs.getString("address"));
+					
+					memberList.add(member);
+				} while(rs.next());
+			}			
+		 } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)	try {rs.close();} catch (SQLException ex) {}
+			if (pstmt != null)	try {pstmt.close();	} catch (SQLException ex) {}
+			if (conn != null)	try {conn.close();	} catch (SQLException ex) {}
+		}
+		return memberList;
+	}
+	
+	public List<LogonDataBean> getMembers(int start,int end,String keyword) throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<LogonDataBean> memberList = null;
+		try {
+			conn = getConnection();
+			
+			pstmt = conn.prepareStatement("select id,passwd,name,jumin1,jumin2,email,blog,reg_date,zipcode,address,r \r\n" + 
+					"			from (select id,passwd,name,jumin1,jumin2,email,blog,reg_date,zipcode,address,rownum r \r\n" + 
+					"			from (select id,passwd,name,jumin1,jumin2,email,blog,reg_date,zipcode,address \r\n" + 
+					"			from members order by id asc )where id like '%"+keyword+"%' OR name like '%"+keyword+"%' OR address like '%"+keyword+"%' order by id asc) where r>= ? and r<=?");
+	/*		select id,passwd,name,jumin1,jumin2,email,blog,reg_date,zipcode,address,r 
+			from (select id,passwd,name,jumin1,jumin2,email,blog,reg_date,zipcode,address,rownum r 
+			from (select id,passwd,name,jumin1,jumin2,email,blog,reg_date,zipcode,address 
+			from members order by id asc )where id like '%"+keyword+"%' OR name like '%"+keyword+"%' OR address like '%"+keyword+"%' order by id asc) where r>= ? and r<=?;
+	*/		
+			
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				memberList = new ArrayList<LogonDataBean>(end);
+				do {
+					LogonDataBean member = new LogonDataBean();
+					member.setId(rs.getString("id"));
+					member.setPasswd(rs.getString("passwd"));
+					member.setName(rs.getString("name"));
+					member.setJumin1(rs.getString("jumin1"));
+					member.setJumin2(rs.getString("jumin2"));
+					member.setEmail(rs.getString("email"));
+					member.setBlog(rs.getString("blog"));
+					member.setReg_date(rs.getTimestamp("reg_date"));
+					member.setZipcode(rs.getString("zipcode"));
+					member.setAddress(rs.getString("address"));
+					
+					memberList.add(member);
+				} while(rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)	try {rs.close();} catch (SQLException ex) {}
+			if (pstmt != null)	try {pstmt.close();	} catch (SQLException ex) {}
+			if (conn != null)	try {conn.close();	} catch (SQLException ex) {}
+		}
+		return memberList;
 	}
 	
 	public void updateMember(LogonDataBean member) throws Exception {

@@ -76,6 +76,10 @@
 				<input type="button" value="Modify" onclick="javascript:window.location='modify.jsp'" />
 			</div>
 		</form>
+		<div>
+		 <a href="../board/list.jsp">게시판</a>
+         <a href="../JspPracProject3/list.jsp">방명록</a>
+         </div>
 	</div>
 </div>
 

@@ -13,7 +13,9 @@
 	
 	if(check==1){
 %>
-	<meta http-equiv="Refresh" content="0;url=content.jsp?num=<%=content_num %>&pageNum=<%=pageNum %>">
+	<script type="text/javascript">
+		location.href="content.jsp?num=<%=content_num%>&pageNum=<%=comment_num %>";
+	</script>
 	<%} else { %>
 	<script type="text/javascript">
 	alert("비밀번호가 맞지 않습니다.");

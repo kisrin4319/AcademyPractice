@@ -130,7 +130,7 @@ public class CommentDBBean {
 		
 		try {
 			conn= getConnection();
-			String query = "selelct passwd from b_comment where content_num =? and comment_num =?";
+			String query = "select passwd from b_comment where content_num =? and comment_num =?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, content_num);
 			pstmt.setInt(2, comment_num);

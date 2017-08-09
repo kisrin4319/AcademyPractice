@@ -33,11 +33,6 @@ public class BoardDBBean {
 		int re_level = article.getRe_level();
 		
 		int number =0;
-		System.out.println("넘어온 num값 :"+num);
-		System.out.println("넘어온 ref값 :"+ref);
-		System.out.println("넘어온 re_step값 :"+re_step);
-		System.out.println("넘어온 re_level값 :"+re_level);
-		
 		
 		try {
 			conn = getConnection();
@@ -116,8 +111,6 @@ public class BoardDBBean {
 	      Connection conn = null;
 	      PreparedStatement pstmt = null;
 	      ResultSet rs = null;
-	      System.out.println("n ="+n);
-	      System.out.println(searchKeyword);
 	      String[] col_name = {"writer","subject","content"};
 	      try {
 	         conn = getConnection();
@@ -240,7 +233,6 @@ public class BoardDBBean {
 	       PreparedStatement pstmt = null;
 	       ResultSet rs = null;
 	       List<BoardDataBean> articleList = null;
-	       System.out.println(n);
 	       String[] col_name = {"writer","subject","content"};
 	       try {
 	         conn = getConnection();

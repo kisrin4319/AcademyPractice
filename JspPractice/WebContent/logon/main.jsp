@@ -10,6 +10,7 @@
   </head>
  <body onLoad="focusIt();">
     <%
+    try{
     if(session.getAttribute("memId")==null){
     %>
     <script type="text/javascript">
@@ -59,13 +60,11 @@
                 </dd>
              </dl>
              <div class="btnArea">
-                <input type="submit" name="Submit" value="Ok" /> <input
-                   type="button" value="Join"
-                   onclick="javascript:window.location='inputForm.jsp'" /> <input
-                   type="button" value="Find id"
-                   onclick="javascript:window.location='findIdForm.jsp'" /> <input
-                   type="button" value="Find pw"
-                   onclick="javascript:window.location='findPwForm.jsp'" />
+                <input type ="submit" name="Submit" value="Ok" />
+                <input type ="button" value = "Join" onclick="javascript:window.location='inputForm.jsp'" />
+                <input type ="button" value = "Find id" onclick="javascript:window.location='findIdForm.jsp'" />
+                <input type ="button" value = "Find pw" onclick="javascript:window.location='findPwForm.jsp'" />
+                <input type ="button" value = "MemberList" onclick="javascript:window.location='list.jsp'" /> 
              </div>
           </fieldset>
        </form>
@@ -80,12 +79,16 @@
           </p>
        <form action="logout.jsp" method="post">
              <div class="btnArea">
-                <input type="submit" name="Submit" value="Logout" />
-                <input type="button" value="Modify"   onclick="javascript:window.location='modifyForm.jsp'" />
+                <input type ="submit" name = "Submit" value="Logout" />
+                <input type ="button" value = "Modify" onclick="javascript:window.location='modifyForm.jsp'" />
+                <input type ="button" value = "MemberList" onclick="javascript:window.location='list.jsp'" /> 
              </div>
           </form>
-       </div>
+          
+          <a href="../board/list.jsp" >게시판</a>
+          <a href="../JspPracProject3/list.jsp">방명록</a>
     </div>
-    <% } %>
+    <% }
+    } catch(NullPointerException e) {}%>
   </body>
   </html>

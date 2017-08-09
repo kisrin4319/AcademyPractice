@@ -42,6 +42,10 @@
 			alert("주소를 입력하세요.");
 			return false;
 		}
+		if(!userinput.email.value){
+			alert("이메일을 입력하세요.");
+			return false;
+		}
 	}
 	
 	//아이디 중복 여부를 판단
@@ -105,7 +109,7 @@
 						type="text" name="address" maxlength="70" class="w300" /></span></td>
 			</tr>
 			<tr>
-				<th>E-Mail</th>
+				<th><span class="star">*</span>E-Mail</th>
 				<td><input type="text" name="email" maxlength="50" class="w300" /></td>
 			</tr>
 			<tr>
