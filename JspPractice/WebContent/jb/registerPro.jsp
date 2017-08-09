@@ -2,7 +2,7 @@
     pageEncoding="EUC-KR"%>
 <%@ include file ="color.jsp" %>
 <% request.setCharacterEncoding("euc-kr"); %>
-<jsp:useBean id="regBean" class = KH.member.RegisterBean"></jsp:useBean>
+<jsp:useBean id="regBean" class = practice.member.RegisterBean"></jsp:useBean>
 <jsp:setProperty property="*" name="regBean"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

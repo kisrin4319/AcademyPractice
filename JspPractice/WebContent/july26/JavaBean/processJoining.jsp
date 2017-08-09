@@ -3,7 +3,7 @@
 <%
 	request.setCharacterEncoding("euc-kr");
 %>
-<jsp:useBean id="memberInfo" class = "KH.member.MemberInfo" scope ="page"/>
+<jsp:useBean id="memberInfo" class = "practice.member.MemberInfo" scope ="page"/>
 <jsp:setProperty property="*" name="memberInfo"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 

@@ -13,14 +13,17 @@
 		<div class="innerDiv">
 			<h1>Member secession</h1>
 			<%
-				String id = (String) session.getAttribute("memId");
+				String id = (String) request.getParameter("id");
 				String passwd = request.getParameter("passwd");
 
 				LogonDBBean manager = LogonDBBean.getInstance();
 				int check = manager.deleteMember(id, passwd);
 
 				if (check == 1) {
-					session.invalidate();
+					String memId = session.getAttribute("memId")
+					if(memId.equals(id)){
+						session.invalidate();
+					}
 			%>
 
 			<form action="main.jsp" name="userinput" method="post">

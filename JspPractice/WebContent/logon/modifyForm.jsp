@@ -38,7 +38,7 @@ function zipCheck(){
 </head>
 <body>
 <%
-	String id = (String) session.getAttribute("memId");
+	String id = (String) request.getParameter("id");
 	LogonDBBean manager = LogonDBBean.getInstance();
 	LogonDataBean c = manager.getMember(id);
 	try{
