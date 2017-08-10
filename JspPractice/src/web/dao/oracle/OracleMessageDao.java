@@ -15,7 +15,7 @@ import web.model.Message;
 public class OracleMessageDao extends MessageDao {
 
 	@Override
-	public int insert(Connection conn, Message message) throws SQLException { //MessageDao 클래스를 상속 받기에 override 해야함 1.insert
+	public int insert(Connection conn, Message message) throws SQLException {
 		PreparedStatement pstmt = null;
 		try {
 			String query = "insert into guestbook_message "
@@ -48,11 +48,11 @@ public class OracleMessageDao extends MessageDao {
 			if(rs.next()) {
 				List<Message> messageList = new ArrayList<Message>();
 			do {
-				messageList.add(super.makeMessageFromResultSet(rs)); //messageDAO 클래스의 makeMessageFromResultSet 이용
+				messageList.add(super.makeMessageFromResultSet(rs));
 			} while(rs.next());
 			return messageList;
 			} else {
-				return Collections.emptyList(); // 아무것도 들어있지 않은 리스트를 반환한다.
+				return Collections.emptyList();
 			}
 		} finally {
 			JdbcUtil.close(rs);
