@@ -12,7 +12,7 @@
 	<form action="deleteMessage.jsp" method="post">
 	<input type="hidden" name = "messageId" value ="<%=request.getParameter("messageId") %>" />
 		<div class ="delForm">
-			<p> 암호를 입력하세요:</p>
+				<p> 암호를 입력하세요:</p>
 			<dl>
 				<dt>비밀번호</dt>
 				<dd><input type="password" name = "password" /></dd>
