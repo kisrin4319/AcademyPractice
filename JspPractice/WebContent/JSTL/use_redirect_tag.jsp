@@ -10,7 +10,7 @@
 </head>
 <body>
 <c:if test="${param.dest == '1' }">
-	<c:redirect url="/use_c_set.jsp" />
+	<c:redirect url="./use_c_set.jsp" />
 </c:if>
 <c:if test="${param.dest == '2' }">
 	<c:redirect url="use_c_set.jsp" />

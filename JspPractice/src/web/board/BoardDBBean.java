@@ -42,7 +42,6 @@ public class BoardDBBean {
 			
 			if(rs.next()) {
 				number = rs.getInt(1)+1;
-			System.out.println("넘어온 number 값:"+number);
 			}
 			else {
 				number=1;

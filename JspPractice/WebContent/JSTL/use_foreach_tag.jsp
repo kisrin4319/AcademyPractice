@@ -20,6 +20,7 @@
 <c:forEach var ="i" begin="1" end ="100" step="2">
 <c:set var ="sum" value ="${sum+i }" />
 </c:forEach>
+
 결과 = ${sum }
 <h4>구구단: 4단</h4>
 <ul>

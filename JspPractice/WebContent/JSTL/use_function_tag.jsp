@@ -27,7 +27,6 @@ startsWith(str1,str2) = "${fn:startsWith(str1,'Fun')}" <br>
 endsWith(str1,str2) = "$"{fn:endsWith(str1,"ÇÕ´Ï´Ù.) }" <br>
 contains(str1,str2) = "${fn:contains(str1,str2) }" <br>
 containsIgonoreCase(str1,str2) = "${fn:containsIgnoreCase(str1,str2)}"<br>
-
 <c:set var = "array" value="${fn:split(tokens,',') }" />
 join(array, "-") = "${fn:join(array,"-") }" <br>
 excapeXml(str1) = "${fn:escapeXml(str1) }"
