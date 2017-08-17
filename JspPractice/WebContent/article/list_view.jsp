@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="euc-kr" ?>
+<%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=euc-kr"
 	pageEncoding="euc-kr"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,11 +11,12 @@
 	response.setHeader("Cache-Control", "no-cache");
 	response.addHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 1L);
+	String keyword = (String)request.getParameter("keyword");
 %>
 <head>
 <title>게시글 목록</title>
 </head>
-<body>
+<body>	
 	<table border="1">
 		<c:if test="${listModel.totalPageCount > 0}">
 			<tr>
@@ -22,7 +24,6 @@
 					[${listModel.requestPage}/${listModel.totalPageCount}]</td>
 			</tr>
 		</c:if>
-
 		<tr>
 			<td>글 번호</td>
 			<td>제목</td>
@@ -52,13 +53,26 @@
 					</tr>
 				</c:forEach>
 				<tr>
-					<td colspan="5"><c:if test="${beginPage > 10 }">
+					<td colspan="5">			
+						<c:if test="${beginPage > 10 }">
 							<a href="<c:url value="./list.jsp?p=${beginPage-1}"/>">이전</a>
-						</c:if> <c:forEach var="pno" begin="${beginPage+1}" end="${endPage}">
+						</c:if>
+						<c:if test="${keyword == null }">
+						<c:forEach var="pno" begin="${beginPage+1}" end="${endPage}">
 							<a href="<c:url value="./list.jsp?p=${pno}"/>">[${pno}]</a>
-						</c:forEach> <c:if test="${endPage <listModel.totalPageCount}">
+						</c:forEach>
+						</c:if>
+						<c:if test="${keyword!= null }">
+						<c:forEach var="pno" begin="${beginPage+1}" end="${endPage}">
+							
+							<%String enKey = URLEncoder.encode(keyword,"euc-kr"); %>
+							<a href="<c:url value="./list.jsp?p=${pno}&keyField=${keyField}&keyword=${enKey}"/>">[${pno}]</a>
+						</c:forEach>						
+						</c:if>						
+						<c:if test="${endPage <listModel.totalPageCount}">
 							<a href="<c:url value="./list.jsp?p=${endPage + 1}"/>">다음</a>
-						</c:if></td>
+						</c:if>
+					</td>
 				</tr>
 			</c:otherwise>
 		</c:choose>
@@ -67,5 +81,14 @@
 			<td colspan="5"><a href="writeForm.jsp">글쓰기</a></td>
 		</tr>
 	</table>
+	 <form action="list.jsp">
+	 <select name="keyField">
+	 	<option value="0">작성자 </option>
+		<option value="1">제목</option>
+		<option value="2">내용</option>
+	 </select>
+		 <input type="text" name="keyword" size="15" maxlength="30" />
+		 <input type="submit" value="검 색" />
+	 </form>
 </body>
 </html>

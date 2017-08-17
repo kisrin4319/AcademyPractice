@@ -79,7 +79,7 @@
 					<%
 						if (session.getAttribute("memId") != null) {
 					%> <%=session.getAttribute("memId")%>님 <input type="button"
-					value="로그아웃" onclick="document.location.href='../logon/logout.jsp'"
+					value="로그아웃" onclick="document.location.href='../logon/logout.jsp'"/>
 					<%}%>
 				</td>
 				<td align="right">
@@ -232,8 +232,8 @@
 					<option value="0">작성자 </option>
 					<option value="1">제목</option>
 					<option value="2">내용</option>
-				</select> <input type="text" name="keyword" size="15" maxlength="30" /> <input
-					type="submit" value="검 색" class="btn" />
+				</select> <input type="text" name="keyword" size="15" maxlength="30" />
+				<input type="submit" value="검 색" class="btn" />
 			</div>
 		</form>
 		<div id="footer">
