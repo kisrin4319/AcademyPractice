@@ -38,6 +38,22 @@ public class ArticleDao { //ListArticleService가 필요로 하는 데이터를 제공한다.
 		}
 	}
 	
+	public int selectKeywordCount(Connection conn,int n, String keyword) throws SQLException {
+		Statement stmt = null;
+		ResultSet rs = null;
+		String[] col_name = {"writer_name","title","content"};
+		try {
+			String query = "select count(*) from article where "+col_name[n]+" like '%"+keyword+"%'";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			rs.next();
+			return rs.getInt(1);
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(stmt);
+		}
+	}
+	
 	public List<Article> select(Connection conn, int firstRow, int endRow) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -47,6 +63,35 @@ public class ArticleDao { //ListArticleService가 필요로 하는 데이터를 제공한다.
 					+ "select * from article m order by m.sequence_no desc "
 					+ ") where rownum <= ? "
 					+ ") where rnum >= ?";
+			//article 데이터를 sequence_no의 내림차순으로 정렬해서 시작 행과 끝 행에 해당 되는 행만 구한다.
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, endRow);
+			pstmt.setInt(2, firstRow);
+			rs = pstmt.executeQuery();
+			if(!rs.next()) {
+				return Collections.emptyList(); // 데이터가 없을 경우 빈 List 리턴
+			}
+			List<Article> articleList = new ArrayList<Article>();
+			do {
+				Article article = makeArticleFromResultSet(rs,false);
+				articleList.add(article);
+			} while(rs.next());
+			return articleList;
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
+	
+	public List<Article> selectKeyword(Connection conn, int firstRow, int endRow, int n, String keyword) throws SQLException {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String[] col_name = {"writer_name","title","content"};
+		try {
+			String query = "select article_id, group_id, sequence_no, posting_date, read_count, writer_name, password, title from ( "
+					+ "select rownum rnum, article_id, group_id, sequence_no, posting_date, read_count, writer_name, password, title from ( "
+					+ "select * from article m order by m.sequence_no desc ) where "+col_name[n]+" like '%"+keyword+"%' and rownum <= ? ) where rnum >= ?";
 			//article 데이터를 sequence_no의 내림차순으로 정렬해서 시작 행과 끝 행에 해당 되는 행만 구한다.
 			pstmt = conn.prepareStatement(query);
 			
