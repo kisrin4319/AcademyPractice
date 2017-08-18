@@ -20,7 +20,7 @@
 				int check = manager.deleteMember(id, passwd);
 
 				if (check == 1) {
-					String memId = session.getAttribute("memId")
+					String memId = (String)session.getAttribute("memId");
 					if(memId.equals(id)){
 						session.invalidate();
 					}

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="euc-kr"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
@@ -24,13 +24,13 @@
 	</servlet-mapping>
 
 	<context-param>
-		<description>ë¡œê¹… ì—¬ë¶€</description>
+		<description>·Î±ë ¿©ºÎ</description>
 		<param-name>logEnabled</param-name>
 		<param-value>true</param-value>
 	</context-param>
 
 	<context-param>
-		<description>ë””ë²„ê¹… ë ˆë²¨</description>
+		<description>µð¹ö±ë ·¹º§</description>
 		<param-name>debugLevel</param-name>
 		<param-value>5</param-value>
 	</context-param>
