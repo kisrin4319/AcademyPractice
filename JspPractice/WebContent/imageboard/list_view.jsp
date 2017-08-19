@@ -11,9 +11,11 @@
 %>
 <%
 	String pageNum = request.getParameter("page");
-	if(pageNum == null) pageNum = "1";
-	int currentPage = Integer.parseInt(pageNum);
-	
+	if(pageNum == null){
+		pageNum = "1";
+	}
+	int currentPage = Integer.parseInt(pageNum.trim());
+	System.out.println(currentPage);
 	String[] searchCond = request.getParameterValues("search_cond");
 	String searchKey = request.getParameter("search_key");
 	
@@ -94,7 +96,7 @@
 		<%
 			Theme theme = (Theme)pageContext.getAttribute("theme");
 		%>
-		<img src="/Water/image/${theme.image }.small.jpg" width="50">
+		<img src="/JspPractice/image/${theme.image }.small.jpg" width="50">
 		</c:if></td>
 		<td><a href="javascript:goView(${theme.id })">${theme.title }</a></td>
 		<td>${theme.name }</td>
@@ -127,29 +129,29 @@ function goView(id) {
 <c:set var="currentPage" value="<%= Integer.toString(currentPage) %>" />
 
 <c:if test="${count > 0}">
-	<c:set var="pageCount" value="${count / PAGE_SIZE + (count % PAGE_SIZE == 0 ? 0 : 1) }" />
-	<c:set var="startPage" value="${currentPage - (currentPage % 10 ) + 1 } "/>
-	<c:set var="endPage" value="${startPage +10 }"/>
+	<c:set var="pageCount" value="${count/PAGE_SIZE+(count % PAGE_SIZE == 0 ? 0 : 1)}" />
+	<c:set var="startPage" value="${currentPage - (currentPage % 10 ) + 1}" />
+	<c:set var="endPage" value="${startPage +10}" />
 	
-	<c:if test="${endPage > pageCount }">
-		<c:set var="endPage" value="${pageCount }"/>
+	<c:if test="${endPage > pageCount}">
+		<c:set var="endPage" value="${pageCount}"/>
 	</c:if>
 	<c:if test="${startPage > 10 }">
-		<a href="javascript:goPage(${startPage - 10 })">[이전]</a>
+		<a href="javascript:goPage(${startPage-10})">[이전]</a>
 	</c:if>
-	<c:forEach var="pageNo" begin="${startPage }" end="${endPage }">
-		<c:if test="${currentPage == pageNo }"><b></c:if>
-		<a href="javascript:goPage(${pageNo })">[${pageNo }]</a>
-		<c:if test="${currentPage == pageNo }"></b></c:if>
+	<c:forEach var="pageNo" begin="${startPage}" end="${endPage}">
+		<c:if test="${currentPage == pageNo}"><b></c:if>
+		<a href="javascript:goPage(${pageNo})">[${pageNo }]</a>
+		<c:if test="${currentPage == pageNo}"></b></c:if>
 	</c:forEach>
 	<c:if test="${endPage < pageCount }">
-		<a href="javascript:goPage(${startPage + 10 })">[다음]</a>
+		<a href="javascript:goPage(${startPage + 10})">[다음]</a>
 	</c:if>
 </c:if>
 
 <form name="move" method="post">
 	<input type="hidden" name="id" value=""	>
-	<input type="hidden" name="page" value="${currentPage }">
+	<input type="hidden" name="page" value="${currentPage}">
 	<c:if test="<%= searchCondTitle %>">
 	<input type="hidden" name="search_cond" value="title">
 	</c:if>

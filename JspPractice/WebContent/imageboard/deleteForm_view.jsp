@@ -38,7 +38,7 @@ function validate(form) {
 	<tr>
 		<td>ÀÌ¹ÌÁö</td>
 		<td>
-		<img src="/Water/image/${theme.image }" width="150" border="0">
+		<img src="/JspPractice/image/${theme.image }" width="150" border="0">
 		</td>
 	</tr>
 	</c:if>

@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class Theme {
 
 	private int id;
-	private int groupid;
+	private int groupId;
 	private int orderNo;
 	private int levels;
 	private int parentId;
@@ -22,11 +22,11 @@ public class Theme {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getGroupid() {
-		return groupid;
+	public int getGroupId() {
+		return groupId;
 	}
-	public void setGroupid(int groupid) {
-		this.groupid = groupid;
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
 	}
 	public int getOrderNo() {
 		return orderNo;

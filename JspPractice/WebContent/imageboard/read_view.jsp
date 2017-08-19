@@ -32,8 +32,8 @@
 <c:if test="${!empty theme.image }">
 <tr>
 	<td colspan="2" align="center">
-		<a href="javascript:viewLarge('C:\\git\\JspPractice\\WebContent\\image\\${theme.image }')">
-		<img src="C:\\git\\JspPractice\\WebContent\\image\\${theme.image }" width="150" border="0" />
+		<a href="javascript:viewLarge('/JspPractice/image/${theme.image }')">
+		<img src="/JspPractice/image/${theme.image }" width="150" border="0" />
 		<br />[크게보기]
 		</a>
 	</td>
@@ -46,7 +46,7 @@
 <tr>
 	<td colspan="2">
 		<a href="javascript:goReply()">[답변]</a>
-		<a href="javascript:goModify()">[수정]]</a>
+		<a href="javascript:goModify()">[수정]</a>
 		<a href="javascript:goDelete()">[삭제]</a>
 		<a href="javascript:goList()">[목록]</a>
 	</td>
@@ -73,6 +73,12 @@ function goList() {
 }
 function viewLarge(imgUrl) {
 	
+	var win = window.open('', 'Detail', 'width='+300+', height='+250+', menubar=0, toolbar=0, directories=0, scrollbars=1, status=0, location=0, resizable=1');
+	 op="<html><head><title>크게 보기</title></head>";
+	 op+="<body leftmargin='0' topmargin='0'>";
+	 op+="<img src='"+ imgUrl +"' border='0' style='cursor:pointer' onclick='window.close();' onload='window.resizeTo(this.width+200, this.height+300); window.moveTo( (screen.width-this.width)/2 ,  (screen.height-this.height)/2-50 )'>";
+	 op+="</body></html>";
+	 win.document.write(op);
 }
 </script>
 <form name = "move" method="post">

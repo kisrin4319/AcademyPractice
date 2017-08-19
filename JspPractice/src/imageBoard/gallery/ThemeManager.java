@@ -61,7 +61,7 @@ public class ThemeManager {
 					maxGroupId = rsGroup.getInt(1);
 				}
 				maxGroupId++;
-				theme.setGroupid(maxGroupId);
+				theme.setGroupId(maxGroupId);
 				theme.setOrderNo(0);
 			} else {
 				//특정 글의 답글인 경우.
@@ -82,17 +82,17 @@ public class ThemeManager {
 			if(theme.getOrderNo()>0) {
 				String query ="update THEME_MESSAGE33 set ORDER_NO = ORDER_NO +1 where GROUP_ID = ? and ORDER_NO >= ?";
 				pstmtOrderUpdate = conn.prepareStatement(query);
-				pstmtOrderUpdate.setInt(1, theme.getGroupid());
+				pstmtOrderUpdate.setInt(1, theme.getGroupId());
 				pstmtOrderUpdate.setInt(2, theme.getOrderNo());
 				pstmtOrderUpdate.executeUpdate();
 			}
 			//새로운 글의 번호를 구한다.
 			theme.setId(Sequencer.nextId(conn, "THEME_MESSAGE33"));
 			//글을 삽입한다.
-			String query = "insert into THEME_MESSAGE values (?,?,?,?,?,?,?,?,?,?,?)";
+			String query = "insert into THEME_MESSAGE33 values (?,?,?,?,?,?,?,?,?,?,?)";
 			pstmtInsertMessage = conn.prepareStatement(query);
 			pstmtInsertMessage.setInt(1, theme.getId());
-			pstmtInsertMessage.setInt(2, theme.getGroupid());
+			pstmtInsertMessage.setInt(2, theme.getGroupId());
 			pstmtInsertMessage.setInt(3, theme.getOrderNo());
 			pstmtInsertMessage.setInt(4, theme.getLevels());
 			pstmtInsertMessage.setInt(5, theme.getParentId());
@@ -184,7 +184,7 @@ public class ThemeManager {
 				do {
 					Theme theme = new Theme();
 					theme.setId(rsMessage.getInt("theme_message_id"));
-					theme.setGroupid(rsMessage.getInt("group_id"));
+					theme.setGroupId(rsMessage.getInt("group_id"));
 					theme.setOrderNo(rsMessage.getInt("order_no"));
 					theme.setLevels(rsMessage.getInt("levels"));
 					theme.setParentId(rsMessage.getInt("parent_id"));
@@ -226,13 +226,13 @@ public class ThemeManager {
 			Theme theme = null;
 			
 			conn = getConnection();
-			pstmtMessage = conn.prepareStatement( "select * from theme_message33 " + " where theme_message_id = ? " );
+			pstmtMessage = conn.prepareStatement("select * from theme_message33 where theme_message_id = ?");
 			pstmtMessage.setInt(1, id);
 			rsMessage = pstmtMessage.executeQuery();
 			if(rsMessage.next()) {
 				theme = new Theme();
 				theme.setId(rsMessage.getInt("theme_message_id"));
-				theme.setGroupid(rsMessage.getInt("group_id"));
+				theme.setGroupId(rsMessage.getInt("group_id"));
 				theme.setOrderNo(rsMessage.getInt("order_no"));
 				theme.setLevels(rsMessage.getInt("levels"));
 				theme.setParentId(rsMessage.getInt("parent_id"));
@@ -243,7 +243,7 @@ public class ThemeManager {
 				theme.setPassword(rsMessage.getString("password"));
 				theme.setTitle(rsMessage.getString("title"));
 				
-				pstmtContent = conn.prepareStatement( "select content from theme_content33" + "where theme_message_id = ?" );
+				pstmtContent = conn.prepareStatement("select content from theme_content33 where theme_message_id = ?");
 				pstmtContent.setInt(1, id);
 				rsContent = pstmtContent.executeQuery();
 				if (rsContent.next()) {
@@ -337,10 +337,10 @@ public class ThemeManager {
 		try {
 			conn = getConnection();
 			conn.setAutoCommit(false);
-			String query = "update THEME_MESSAGE33 set NAME =?,EMAIL=?,IMAGE=?,TITLE=? where THEME_MESSAGE_ID =?";
-			pstmtUpdateMessage = conn.prepareStatement(query);
-			query = "update THEME_CONTENT33 set CONTENT =? where THEME_MESSAGE_ID =?";
-			pstmtUpdateContent = conn.prepareStatement(query);
+			String query1 = "update THEME_MESSAGE33 set NAME =?,EMAIL=?,IMAGE=?,TITLE=? where THEME_MESSAGE_ID =?";
+			pstmtUpdateMessage = conn.prepareStatement(query1);
+			String query2 = "update THEME_CONTENT33 set CONTENT =? where THEME_MESSAGE_ID =?";
+			pstmtUpdateContent = conn.prepareStatement(query2);
 			
 			pstmtUpdateMessage.setString(1, theme.getName());
 			pstmtUpdateMessage.setString(2, theme.getEmail());
@@ -366,6 +366,7 @@ public class ThemeManager {
 			if(conn!=null) {
 				try {
 					conn.setAutoCommit(true);
+					conn.close();
 				} catch (SQLException e) {}
 			}
 		}

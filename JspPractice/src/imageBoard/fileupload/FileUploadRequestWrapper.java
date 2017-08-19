@@ -13,7 +13,6 @@ import org.apache.tomcat.util.http.fileupload.DiskFileUpload;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
 
 public class FileUploadRequestWrapper extends HttpServletRequestWrapper {
 
@@ -29,7 +28,7 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper {
 	}
 	private void parsing(HttpServletRequest request, int threshold, int max, String repositoryPath) throws FileUploadException {
 		
-		if(FileUpload.isMultipartContent(new ServletRequestContext(request))) {
+		if(FileUpload.isMultipartContent(request)) {
 			multipart = true;
 			
 			parameterMap = new HashMap<String, String[]>();
@@ -40,7 +39,7 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper {
 				diskFileUpload.setRepositoryPath(repositoryPath);
 			}
 			
-			List list = diskFileUpload.parseRequest(new ServletRequestContext(request));
+			List<?> list = diskFileUpload.parseRequest((request));
 			for(int i = 0; i<list.size();i++) {
 				FileItem fileItem = (FileItem) list.get(i);
 				String name = fileItem.getFieldName();
@@ -85,10 +84,10 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper {
 			return super.getParameterValues(name);
 		}
 	}
-	public Enumeration getParameterNames() {
+	public Enumeration<?> getParameterNames() {
 		if(multipart) {
-			return new Enumeration() {
-				Iterator iter = parameterMap.keySet().iterator();
+			return new Enumeration<Object>() {
+				Iterator<String> iter = parameterMap.keySet().iterator();
 				
 				public boolean hasMoreElements() {
 					return iter.hasNext();
@@ -102,7 +101,7 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper {
 		}
 	}
 	
-	public Map getParameterMap() {
+	public Map<String, String[]> getParameterMap() {
 		if(multipart) {
 			return parameterMap;
 		} else {
@@ -120,7 +119,7 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper {
 	
 	public void delete() {
 		if(multipart) {
-			Iterator fileItemIter = fileItemMap.values().iterator();
+			Iterator<FileItem> fileItemIter = fileItemMap.values().iterator();
 			while(fileItemIter.hasNext()) {
 				FileItem fileItem = (FileItem) fileItemIter.next();
 				fileItem.delete();

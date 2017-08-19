@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="euc-kr" ?>
 <%@page import="imageBoard.gallery.Theme"%>
 <%@page import="imageBoard.gallery.ThemeManager"%>
+<%@page import = "imageBoard.gallery.ThemeManagerException" %>
 <%@ page language="java" contentType="text/html; charset=euc-kr" pageEncoding="euc-kr"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -11,7 +12,7 @@
 	Theme theme = manager.select(Integer.parseInt(themeId));
 %>
 <c:set var = "theme" value ="<%=theme %>"/>
-<c:if test = "${empty theme }">
+<c:if test = "${!empty theme }">
 <script language="JavaScript">
 function validate(form) {
 	if(form.title.value == ""){
@@ -35,7 +36,7 @@ function validate(form) {
 <table width="100%" border="1" cellpadding="1" cellspacing="0">
 <tr>
 	<td>제목</td>
-	<td><input type="text" name = "id" size="40" value="${theme.title }" /></td>
+	<td><input type="text" name = "title" size="40" value="${theme.title }" /></td>
 </tr>
 <tr>
 	<td>이름</td>
@@ -54,7 +55,7 @@ function validate(form) {
 	<td><input type ="file" name = "imageFile" />
 	<c:if test="${!empty theme.image }">
 	<br />
-	<img src="C:\\git\\JspPractice\\WebContent\\image\\${theme.image }"  width="150" border="0"/>
+	<img src="/JspPractice/image/${theme.image }"  width="150" border="0"/>
 	</c:if>
 	</td>
 </tr>

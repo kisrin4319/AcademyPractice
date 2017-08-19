@@ -4,6 +4,7 @@
 <%@ page import ="imageBoard.gallery.ThemeManagerException" %>
 <%@ page language="java" contentType="text/html; charset=euc-kr" pageEncoding="euc-kr"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+  
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%
 	String parentId = request.getParameter("parentId");
@@ -18,6 +19,7 @@
 		}
 	}
 %>
+
 <c:set var = "theme" value ="<%=theme %>" />
 <script language="JavaScript">
 function validate(form){
@@ -31,7 +33,7 @@ function validate(form){
     {
            alert("암호를 입력하세요.");
            return false;
-    } else if(form["parentId"] == null && form.imageFile.value ==""){
+    } else if(form["parentId"] == null || form.imageFile.value ==""){
 		alert("이미지 파일을 선택하세요.");
 		return false;
 	} else if(form.content.value ==""){
@@ -41,7 +43,7 @@ function validate(form){
 }
 </script>
 
-<form action="../imageboard/write.jsp" method="post" enctype="multipart/form-data" onsubmit="return validate(this)">
+<form action="./write.jsp" method="post" enctype="multipart/form-data" onsubmit="return validate(this)">
 	<input type="hidden" name = "levels" value = "${theme.levels+1 }" />
 	<c:if test="${!empty param.groupId }">
 		<input type="hidden" name ="groupId" value ="${param.groupId }" />
