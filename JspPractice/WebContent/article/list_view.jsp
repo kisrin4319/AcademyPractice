@@ -31,7 +31,6 @@
 			<td>작성일</td>
 			<td>조회수</td>
 		</tr>
-
 		<c:choose>
 			<c:when test="${listModel.hasArticle == false}">
 				<tr>
@@ -63,10 +62,9 @@
 						</c:forEach>
 						</c:if>
 						<c:if test="${keyword!= null }">
-						<c:forEach var="pno" begin="${beginPage+1}" end="${endPage}">
-							
-							<%String enKey = URLEncoder.encode(keyword,"euc-kr"); %>
-							<a href="<c:url value="./list.jsp?p=${pno}&keyField=${keyField}&keyword=${enKey}"/>">[${pno}]</a>
+					
+						<c:forEach var="pno" begin="${beginPage+1}" end="${endPage}">							
+							<a href="<c:url value="./list.jsp?p=${pno }&keyField=${keyField}&keyword=${keyword}"/>">[${pno}]</a>
 						</c:forEach>						
 						</c:if>						
 						<c:if test="${endPage <listModel.totalPageCount}">

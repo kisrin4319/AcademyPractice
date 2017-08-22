@@ -10,7 +10,7 @@
 <%@ page errorPage="./error/error_view.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%
-	FileUploadRequestWrapper requestWrap = new FileUploadRequestWrapper(request,-1,-1,"C:\\git\\JspPractice\\WebContent\\temp");
+	FileUploadRequestWrapper requestWrap = new FileUploadRequestWrapper(request,-1,-1,"C:\\git\\JspPractice\\WebContent\\imageboard\\temp");
 	HttpServletRequest tempRequest = request;
 	request = requestWrap;
 %>
@@ -24,11 +24,11 @@
 		image = Long.toString(System.currentTimeMillis());
 		
 		//이미지를 지정한 경로에 저장
-		File imageFile = new File("C:\\Java\\App\\JspPractice\\JspPractice\\WebContent\\image",image);
+		File imageFile = new File("C:\\git\\JspPractice\\WebContent\\imageboard\\image",image);
 		//같은 이름의 파일이름 처리
 		if(imageFile.exists()){
 			for(int i = 0; true; i++){
-				imageFile = new File("C:\\Java\\App\\JspPractice\\JspPractice\\WebContent\\image",image+"_"+i);
+				imageFile = new File("C:\\git\\JspPractice\\WebContent\\imageboard\\image",image+"_"+i);
 				if(!imageFile.exists()){
 					image = image +"_"+i;
 					break;
@@ -38,7 +38,7 @@
 		imageFileItem.write(imageFile);
 		
 		//썸네일 이미지 생성
-		File destFile = new File("C:\\Java\\App\\JspPractice\\JspPractice\\WebContent\\image",image+".small.jpg");
+		File destFile = new File("C:\\git\\JspPractice\\WebContent\\imageboard\\image",image+".small.jpg");
 		ImageUtil.resize(imageFile, destFile, 50, ImageUtil.RATIO);
 	}
 	theme.setRegister(new Timestamp(System.currentTimeMillis()));

@@ -32,8 +32,8 @@
 <c:if test="${!empty theme.image }">
 <tr>
 	<td colspan="2" align="center">
-		<a href="javascript:viewLarge('/JspPractice/image/${theme.image }')">
-		<img src="/JspPractice/image/${theme.image }" width="150" border="0" />
+		<a href="javascript:viewLarge('/JspPractice/imageboard/image/${theme.image }')">
+		<img src="/JspPractice/imageboard/image/${theme.image }" width="150" border="0" />
 		<br />[크게보기]
 		</a>
 	</td>

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ page import="web.board.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.*"%>
@@ -22,7 +21,6 @@
 		}
 
 		int currentPage = Integer.parseInt(pageNum);
-		//System.out.println(currentPage);
 		int startRow = (currentPage * 5) - 4;
 		int endRow = currentPage * pageSize;
 		int count = 0;

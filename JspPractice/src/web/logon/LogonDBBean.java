@@ -174,14 +174,12 @@ public class LogonDBBean {
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
-			System.out.println(keyword);
 			String query = "select count(*) from members where id like '%"+keyword+"%' OR name like '%"+keyword+"%' OR address like '%"+keyword+"%'";
 			
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				System.out.println(rs.getInt(1));
 				return rs.getInt(1);
 			}
 		} catch (Exception e) {

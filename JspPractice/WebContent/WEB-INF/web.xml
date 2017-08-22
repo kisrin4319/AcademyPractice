@@ -12,39 +12,7 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-	<servlet>
-		<description></description>
-		<display-name>NowServlet</display-name>
-		<servlet-name>NowServlet</servlet-name>
-		<servlet-class>KH.NowServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>NowServlet</servlet-name>
-		<url-pattern>/NowServlet</url-pattern>
-	</servlet-mapping>
-
-	<context-param>
-		<description>·Î±ë ¿©ºÎ</description>
-		<param-name>logEnabled</param-name>
-		<param-value>true</param-value>
-	</context-param>
-
-	<context-param>
-		<description>µð¹ö±ë ·¹º§</description>
-		<param-name>debugLevel</param-name>
-		<param-value>5</param-value>
-	</context-param>
-
-	<error-page>
-		<error-code>404</error-code>
-		<location>/16error404.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>500</error-code>
-		<location>/17error500.jsp</location>
-	</error-page>
-
-
+	
 	<jsp-config>
 		<taglib>
 			<taglib-uri>
@@ -54,11 +22,6 @@
 				/WEB-INF/el-functions.tld
 			</taglib-location>
 		</taglib>
-		<jsp-property-group>
-			<url-pattern>/view/*</url-pattern>
-			<include-prelude>/july24/common/variable.jspf</include-prelude>
-			<include-coda>/july24/common/footer.jspf</include-coda>
-		</jsp-property-group>
 	</jsp-config>
 	<servlet>
 		<servlet-name>DBCPInit</servlet-name>
@@ -78,4 +41,24 @@
 		</init-param>
 	<load-on-startup>1</load-on-startup>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>tiles</servlet-name>
+		<servlet-class>org.apache.tiles.web.startup.TilesServlet</servlet-class>
+		<init-param>
+			<param-name>org.apache.tiles.impl.BasicTilesContainer.DEFINITIONS_CONFIG</param-name>
+			<param-value>/WEB-INF/tiles.xml,/WEB-INF/tiles-service.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>TilesDispatchServlet</servlet-name>
+		<servlet-class>org.apache.tiles.web.util.TilesDispatchServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>TilesDispatchServlet</servlet-name>
+		<url-pattern>*.tiles</url-pattern>
+	</servlet-mapping>
 </web-app>

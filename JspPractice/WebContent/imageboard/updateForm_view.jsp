@@ -55,7 +55,7 @@ function validate(form) {
 	<td><input type ="file" name = "imageFile" />
 	<c:if test="${!empty theme.image }">
 	<br />
-	<img src="/JspPractice/image/${theme.image }"  width="150" border="0"/>
+	<img src="/JspPractice/imageboard/image/${theme.image }"  width="150" border="0"/>
 	</c:if>
 	</td>
 </tr>

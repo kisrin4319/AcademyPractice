@@ -8,9 +8,7 @@ import java.sql.SQLException;
 import web.jdbc.JdbcUtil;
 
 public class Sequencer {
-
 	
-
 	public synchronized static int nextId(Connection conn , String tableName) throws SQLException {
 		
 		PreparedStatement pstmtSelect = null;
@@ -18,7 +16,7 @@ public class Sequencer {
 		PreparedStatement pstmtUpdate= null;
 		
 		try {
-			String query = "select MESSAGE_ID from ID_SEQUENCES33 where TABLE_NAME =  ?";
+			String query = "select MESSAGE_ID from ID_SEQUENCES33 where TABLE_NAME = ?";
 			pstmtSelect = conn.prepareStatement(query);
 			pstmtSelect.setString(1, tableName);
 			
@@ -28,7 +26,7 @@ public class Sequencer {
 				int id = rsSelect.getInt(1);
 				id++;
 				
-				query = "update ID_SEQUENCES33 set MESSAGE_ID =? where TABLE_NAME =?";
+				query = "update ID_SEQUENCES33 set MESSAGE_ID =? where TABLE_NAME = ?";
 				pstmtUpdate = conn.prepareStatement(query);
 				pstmtUpdate.setInt(1, id);
 				pstmtUpdate.setString(2, tableName);

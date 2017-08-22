@@ -15,7 +15,6 @@
 		pageNum = "1";
 	}
 	int currentPage = Integer.parseInt(pageNum.trim());
-	System.out.println(currentPage);
 	String[] searchCond = request.getParameterValues("search_cond");
 	String searchKey = request.getParameter("search_key");
 	
@@ -96,7 +95,7 @@
 		<%
 			Theme theme = (Theme)pageContext.getAttribute("theme");
 		%>
-		<img src="/JspPractice/image/${theme.image }.small.jpg" width="50">
+		<img src="/JspPractice/imageboard/image/${theme.image }.small.jpg" width="50">
 		</c:if></td>
 		<td><a href="javascript:goView(${theme.id })">${theme.title }</a></td>
 		<td>${theme.name }</td>

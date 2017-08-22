@@ -69,7 +69,6 @@ public class ListArticleService {
 			}
 			
 			int totalPageCount = calculateTotalPageCount(totalKeywordArticleCount); //calculateTotalPageCount()메서드를 호출해서 전체 페이지 개수를 구한다. 
-			System.out.println(totalPageCount);
 			int firstRow = (requestPageNumber -1) * COUNT_PER_PAGE +1;
 			int endRow = firstRow + COUNT_PER_PAGE -1;
 	
