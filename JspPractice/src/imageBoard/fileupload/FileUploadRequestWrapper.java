@@ -31,7 +31,7 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper {
 		if(FileUpload.isMultipartContent(request)) {
 			multipart = true;
 			
-			parameterMap = new HashMap<String, String[]>();
+			parameterMap = new HashMap<String, String[]>(); 
 			fileItemMap = new HashMap<String, FileItem>();
 			
 			DiskFileUpload diskFileUpload = new DiskFileUpload();

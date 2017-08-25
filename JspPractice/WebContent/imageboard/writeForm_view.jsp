@@ -33,7 +33,7 @@ function validate(form){
     {
            alert("암호를 입력하세요.");
            return false;
-    } else if(form["parentId"] == null || form.imageFile.value ==""){
+    } else if(form["parentId"] == null && form.imageFile.value ==""){
 		alert("이미지 파일을 선택하세요.");
 		return false;
 	} else if(form.content.value ==""){
