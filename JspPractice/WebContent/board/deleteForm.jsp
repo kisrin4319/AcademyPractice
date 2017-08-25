@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%@ include file  ="../view/color.jsp" %>
 
 <%
 	int num = Integer.parseInt(request.getParameter("num"));

@@ -71,7 +71,7 @@
 							<a href="<c:url value = "list.jsp?p=${pno }" />"><span class = "currentPage">[${pno }]</span></a>
 						</c:when>
 						<c:otherwise>
-							<a href="<c:url value = "list.jsp?p=${pno }" />"[${pno }]</a>
+							<a href="<c:url value = "list.jsp?p=${pno }">"/>[${pno }]</a>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
