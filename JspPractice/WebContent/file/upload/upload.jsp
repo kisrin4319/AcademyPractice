@@ -1,4 +1,5 @@
-<%@page import="org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
 <%@page import="pds.service.AddPdsItemService"%>
 <%@page import="pds.model.PdsItem"%>
 <%@page import="pds.file.FileSaveHelper"%>
@@ -6,8 +7,6 @@
 <%@page import="java.util.Iterator"%>
 <%@page import="pds.model.AddRequest"%>
 <%@page import="java.util.List"%>
-<%@page import="org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory"%>
-<%@page import="org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload"%>
 <%@page language="java" contentType="text/html; charset=euc-kr" pageEncoding="euc-kr"%>
 <%
 	boolean isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -22,7 +21,7 @@
 	//업로드 요청을 처리하는 ServletFileUpload의 객체 생성.
 	ServletFileUpload upload = new ServletFileUpload(factory);
 	//업로드 요청 분할하여 객체에 담아 list컬렉션으로 돌려준다.
-	List<FileItem> items = upload.parseRequest(new ServletRequestContext(request));
+	List<FileItem> items = upload.parseRequest((request));
 	//9.0에러인지 아닌지 모르겠는데 FileUpload의 파라미터가 바뀌었다.
 	//따라서 new ServletRequestContext(request))로써 추가해야 한다.
 	AddRequest addRequest = new AddRequest();
